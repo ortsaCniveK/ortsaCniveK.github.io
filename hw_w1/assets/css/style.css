@@ -1,16 +1,145 @@
-.navlist {
-	/*
-	add something here to unstyle the list and make it go from left to right
-	clear out the styling (reset will do that by default)
-	add spacing
-	perhaps add some on hover effects to the text
-	*/
+* {
+	font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+	/*heading fonts should be set manually*/
+	color: #777777;
+	content-type: border-box;
 }
 
-.social {
-	/*
-	constrain dimensions of the images to fit in the navbar
-	*/
+/*will set the fonts for only the headings*/
+h1, h2 {
+	font-family: 'Georgia', Times, Times New Roman, serif;
+	color: #4aaaa5;
+	font-weight: 900;
+	font-size:24px;
+}
+
+/*form styling*/
+h3 {
+	font-weight: 500;
+	font-family: 'Arial';
+	margin: 0 0 5px 0;
+}
+
+body {
+	background-image: url('../images/round.png');
+	/*This is meant to set the background image for the page itself.*/
+}
+
+a {
+	margin: 20px;
+}
+
+a:link, a:visited {
+	text-decoration: none;
+}
+
+a:hover, a:active {
+	color: #4aaaa5;
+}
+
+/*header css goes here*/
+
+.header {
+	background-color: #fff;
+	margin-bottom: 40px;
+	border-bottom: 2px solid #cccccc;
+
+	height: 75px;
+}
+
+.nav {
+	position: relative;
+}
+
+/*kinda hacky, but I needed to do something so it would look right.*/
+.name {
+	/*positioning*/
+	position: absolute;
+	padding: 20px;
+	left: 25%;
+
+	/*looks*/
+	height: 35px;
+	background-color: #4aaaaf;
+	color: #fff;
+	text-align: center;
+	
+}
+
+.navlist {
+	position: absolute;
+	right: 0;
+	top: 30px;
+}
+
+
+/*main content area goes here*/
+
+/*setting the page size with margins*/
+.container {
+	margin: 0 auto;
+	width: 960px;
+	display: flex;
+	/*This will center the page and set conent width to 960px*/
+}
+
+/*Main class declarations*/
+
+.main {
+	flex: 2;
+	margin: 20px;
+	border: 2px solid #dddddd;
+	padding: 40px 30px 40px 30px;
+
+}
+
+/*profile image on index*/
+.profile {
+	/*this should help wrap the text around properly*/
+	height: 188px;
+	width: 188px;
+	float: left;
+	margin: 0 15px 15px 0;
+	/*add in clearfix?*/
+}
+
+/*had to manually change some things in order to make it look right for submit*/
+.submit {
+	background-color: #4aaaa5;
+	color: #ffffff;
+	font-family: 'Arial';
+	font-weight: 500;
+	padding: 10px 20px 10px 20px;
+	margin: 20px;
+}
+
+/*social content section*/
+
+.social-content {
+	margin: 20px;
+	border: 2px solid #dddddd;
+	padding: 40px 30px 40px 30px;
+	display: flex;
+	flex-direction: column;
+}
+
+/*below are the stylings for social links -- override the a selector.*/
+.social *{
+	height: 50px;
+	margin: 2px;
+	flex-direction: row;
+}
+
+.social > *{
+	flex:1;
+}
+
+/*footer css goes here*/
+
+.footer {
+	background-color: #666666;
+	margin-top: 40px;
+	border-top: 2px solid #cccccc;
 }
 
 .footer-txt {
@@ -18,4 +147,10 @@
 	center and make this text rather small
 	make color white as well
 	*/
+	font-weight: 350;
+	color: #ffffff;
+	text-align: center;
+	padding: 20px;
+	font-size: 10px;
 }
+

@@ -6,82 +6,96 @@
 	<title>Contact Me</title>
 	<meta charset="utf-8">
 
-	<link rel="stylesheet" type="text/css" href="/assets/css/reset.css">
-	<link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+	<link rel="stylesheet" type="text/css" href="./assets/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="./assets/css/style.css">
 
 </head>
 
 <body>
 
 	<!-- Header and Navigation goes here -->
-	<header>
+	<header class="header">
 		<!-- Naviagation Bar -->
-		<nav>
+		<nav class="nav">
 			<!-- this h1 should have styling to add background to its element -->
-			<h1>Kevin Castro</h1>
+			<h1 class="name">Kevin Castro</h1>
 			
 			<!-- This list should be unstyled with bullets and go from left to right -->
-			<ul class="navlist">
-				<li><a href="about.html">About</a></li>
-				<li><a href="portfolio.html">Portfolio</a></li>
-				<li><a href="#">Contact</a></li>
-			</ul>
+			<div class="navlist">
+				<a href="./index.html">About</a>
+				<a href="./portfolio.html">Portfolio</a>
+				<a href="#">Contact</a>
+			</div>
 		</nav>
 
 	</header>
+	
+	<div class="container">
+		<!-- Main Content Section -->
+		<!-- Contact Form will go here -->
+		<section class="main">
 
-	<!-- Main Content Section -->
-	<!-- Contact Form will go here -->
-	<section>
+			<h1>Contact</h1>
+			
+			<!-- break -->
+			<br>
 
-		<h1>Contact</h1>
-		
-		<!-- section break -->
-		<hr>
+			<!-- section break -->
+			<hr>
 
-			<form>
+			<!-- break -->
+			<br>
 
-				<!-- Name -->
-				<h3>Name</h3>
-				<input type="text" name="name" placeholder="Name">
+				<form>
 
-				<!-- Email -->
-				<h3>Email</h3>
-				<input type="text" name="email" placeholder="Email">
+					<!-- Name -->
+					<h3>Name</h3>
+					<input type="text" name="name" placeholder="Name">
 
-				<!-- Message -->
-				<h3>Message</h3>
-				<input type="text" name="message" placeholder="Your Message">
-				
-			</form>
+					<!-- Email -->
+					<h3>Email</h3>
+					<input type="text" name="email" placeholder="Email" >
 
-	</section>
+					<!-- Message -->
+					<h3>Message</h3>
+					<input type="text" name="message" placeholder="Your Message"  >
 
-	<!-- Social Media External Links go here -->
-	<aside>
+					<a class="submit" href="#">Submit</a>
+					
+				</form>
 
-		<!-- Social Media Intro followed by images. -->
-		<h2>Connect with Me</h2>
+		</section>
 
-		<!-- Github -->
-		<figure class="social">
-			<a href="https://github.com/ortsaCniveK"><img src="assets/images/github.png" alt="github.com/ortsaCniveK"></a>
-		</figure>
+		<!-- Social Media External Links go here -->
+		<aside class="social-content">
 
-		<!-- LinkedIn -->
-		<figure class="social">
-			<a href="https://www.linkedin.com/in/kevin-castro-0a217399/"><img src="assets/images/linkedin.png" alt="linkedin.com/in/kevin-castro-0a217399/"></a>
-		</figure>
-		
-		<!-- StackOverflow -->
-		<figure class="social">
-			<a href="https://stackoverflow.com/users/8793351/kevin-castro"><img src="assets/images/stackoverflow.png" alt="stackoverflow.com/users/8793351/kevin-castro"></a>
-		</figure>
+			<!-- Social Media Intro followed by images. -->
+			<h2>Connect with Me</h2>
 
-	</aside>
+			<!-- break -->
+			<br>
+
+			<!-- Github -->
+			<figure class="social">
+				<a href="https://github.com/ortsaCniveK"><img src="assets/images/github.png" alt="github.com/ortsaCniveK"></a>
+			</figure>
+
+			<!-- LinkedIn -->
+			<figure class="social">
+				<a href="https://www.linkedin.com/in/kevin-castro-0a217399/"><img src="assets/images/linkedin.png" alt="linkedin.com/in/kevin-castro-0a217399/"></a>
+			</figure>
+			
+			<!-- StackOverflow -->
+			<figure class="social">
+				<a href="https://stackoverflow.com/users/8793351/kevin-castro"><img src="assets/images/stackoverflow.png" alt="stackoverflow.com/users/8793351/kevin-castro"></a>
+			</figure>
+
+		</aside>
+
+	</div>
 
 	<!-- Copyright information goes here -->
-	<footer>
+	<footer class="footer">
 		<p class="footer-txt">© Copyright 2017 Kevin Castro</p>
 	</footer>
 

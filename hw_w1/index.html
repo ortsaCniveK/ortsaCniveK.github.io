@@ -6,84 +6,100 @@
 	<title>Kevin Castro's Coding Portfolio</title>
 	<meta charset="utf-8">
 
-	<link rel="stylesheet" type="text/css" href="/assets/css/reset.css">
-	<link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+	<link rel="stylesheet" type="text/css" href="./assets/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="./assets/css/style.css">
 
 </head>
 
 <body>
-	
+
 	<!-- Header and Navigation goes here -->
-	<header>
+	<header class="header">
 		<!-- Naviagation Bar -->
-		<nav>
+		<nav class="nav">
 			<!-- this h1 should have styling to add background to its element -->
-			<h1>Kevin Castro</h1>
+			<h1 class="name">Kevin Castro</h1>
 			
 			<!-- This list should be unstyled with bullets and go from left to right -->
-			<ul class="navlist">
-				<li><a href="#">About</a></li>
-				<li><a href="portfolio.html">Portfolio</a></li>
-				<li><a href="contact.html">Contact</a></li>
-			</ul>
+			<div class="navlist">
+				<a href="#">About</a>
+				<a href="./portfolio.html">Portfolio</a>
+				<a href="./contact.html">Contact</a>
+			</div>
 		</nav>
 
 	</header>
-	
-	<!-- Main Content Section -->
-	<!-- About Me section will go here -->
-	<section>
-		
-		<h1>About Me</h1>
 
-		<!-- section break -->
-		<hr>
+	<div class="container">
 
-		<!-- profile img which must be text wrapped. Perhaps floated left?-->
-		<figure>
+		<!-- Main Content Section -->
+		<!-- About Me section will go here -->
+		<section class="main">
+			
+			<h1>About Me</h1>
 
-			<img src="assets/images/kc.jpg" alt="Kevin Castro">	
+			<!-- break -->
+			<br>
 
-		</figure>
+			<!-- section break -->
+			<hr>
+			
+			<!-- break -->
+			<br>
 
-		<!-- below will be some text describing myself -->
-		<article>
-			<p>
-				My name is Kevin Castro.  I am an aspiring Web Developer, taking part in the Coding Bootcamp offered by the UCSD Coding Bootcamp.  I am a current student at San Diego Mesa College.  I am studying Computer Science and Math as a double major.  I am interested in working in cybersecurity, Artificial Intelligence, computer-to-human interfaces and Neural Networks after delving more into understanding the internet as a whole, since I think that distributed computing and the like will allow for these things to be researched further.
-			</p>
+			<!-- profile img which must be text wrapped. Perhaps floated left?-->
+			<figure>
 
-			<p>
-				Like I mentioned above, I am a college student, who likes to spend time learning anything about everything.  I like to think of myself as a Jack of All Trades, Master of Some, since I spend a lot of my time learning new topics and becoming an expert on the things that I have an extremely vested interest in.  Outside of trying to learn new things, I spend my downtime playing video games, practicing playing my guiar, folding Origami, and trying to do some voice acting on the side.  I love meeting new people and learning about other people's walks of life.  I think it is important for an individual to understand as many different perspectives as possible.
-			</p>
-		</article>
+				<img class="profile" src="assets/images/kc.jpg" alt="Kevin Castro">	
 
-	</section>
+			</figure>
 
-	<!-- Social Media External Links go here -->
-	<aside>
 
-		<!-- Social Media Intro followed by images. -->
-		<h2>Connect with Me</h2>
 
-		<!-- Github -->
-		<figure class="social">
-			<a href="https://github.com/ortsaCniveK"><img src="assets/images/github.png" alt="github.com/ortsaCniveK"></a>
-		</figure>
+			<!-- below will be some text describing myself -->
+			<article>
+				<p>
+					My name is Kevin Castro.  I am an aspiring Web Developer, taking part in the Coding Bootcamp offered by the UCSD Coding Bootcamp.  I am a current student at San Diego Mesa College.  I am studying Computer Science and Math as a double major.  I am interested in working in cybersecurity, Artificial Intelligence, computer-to-human interfaces and Neural Networks after delving more into understanding the internet as a whole, since I think that distributed computing and the like will allow for these things to be researched further.
+				</p>
 
-		<!-- LinkedIn -->
-		<figure class="social">
-			<a href="https://www.linkedin.com/in/kevin-castro-0a217399/"><img src="assets/images/linkedin.png" alt="linkedin.com/in/kevin-castro-0a217399/"></a>
-		</figure>
-		
-		<!-- StackOverflow -->
-		<figure class="social">
-			<a href="https://stackoverflow.com/users/8793351/kevin-castro"><img src="assets/images/stackoverflow.png" alt="stackoverflow.com/users/8793351/kevin-castro"></a>
-		</figure>
+				<br>
 
-	</aside>
+				<p>
+					Like I mentioned above, I am a college student, who likes to spend time learning anything about everything.  I like to think of myself as a Jack of All Trades, Master of Some, since I spend a lot of my time learning new topics and becoming an expert on the things that I have an extremely vested interest in.  Outside of trying to learn new things, I spend my downtime playing video games, practicing playing my guiar, folding Origami, and trying to do some voice acting on the side.  I love meeting new people and learning about other people's walks of life.  I think it is important for an individual to understand as many different perspectives as possible.
+				</p>
+			</article>
+		</section>
+
+		<!-- Social Media External Links go here -->
+		<aside class="social-content">
+
+			<!-- Social Media Intro followed by images. -->
+			<h2>Connect with Me</h2>
+
+			<!-- break -->
+			<br>
+
+			<!-- Github -->
+			<figure class="social">
+				<a href="https://github.com/ortsaCniveK"><img src="assets/images/github.png" alt="github.com/ortsaCniveK"></a>
+			</figure>
+
+			<!-- LinkedIn -->
+			<figure class="social">
+				<a href="https://www.linkedin.com/in/kevin-castro-0a217399/"><img src="assets/images/linkedin.png" alt="linkedin.com/in/kevin-castro-0a217399/"></a>
+			</figure>
+			
+			<!-- StackOverflow -->
+			<figure class="social">
+				<a href="https://stackoverflow.com/users/8793351/kevin-castro"><img src="assets/images/stackoverflow.png" alt="stackoverflow.com/users/8793351/kevin-castro"></a>
+			</figure>
+
+		</aside>
+
+	</div>
 
 	<!-- Copyright information goes here -->
-	<footer>
+	<footer class="footer">
 		<p class="footer-txt">© Copyright 2017 Kevin Castro</p>
 	</footer>
 
