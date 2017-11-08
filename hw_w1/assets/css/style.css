@@ -3,6 +3,7 @@
 	/*heading fonts should be set manually*/
 	color: #777777;
 	content-type: border-box;
+	line-height: 1.5;
 }
 
 /*will set the fonts for only the headings*/
@@ -37,6 +38,13 @@ a:hover, a:active {
 	color: #4aaaa5;
 }
 
+/*General use flex row*/
+.row {
+	display: flex;
+	flex-direction: row;
+}
+
+
 /*header css goes here*/
 
 .header {
@@ -49,6 +57,7 @@ a:hover, a:active {
 
 .nav {
 	position: relative;
+	color: #999999;
 }
 
 /*kinda hacky, but I needed to do something so it would look right.*/
@@ -56,7 +65,7 @@ a:hover, a:active {
 	/*positioning*/
 	position: absolute;
 	padding: 20px;
-	left: 25%;
+	left: 18%;
 
 	/*looks*/
 	height: 35px;
@@ -68,7 +77,7 @@ a:hover, a:active {
 
 .navlist {
 	position: absolute;
-	right: 0;
+	right: 18%;
 	top: 30px;
 }
 
@@ -80,7 +89,7 @@ a:hover, a:active {
 	margin: 0 auto;
 	width: 960px;
 	display: flex;
-	/*This will center the page and set conent width to 960px*/
+	/*This will center the page and set conent width to 960px as well as set bg col to white*/
 }
 
 /*Main class declarations*/
@@ -90,7 +99,7 @@ a:hover, a:active {
 	margin: 20px;
 	border: 2px solid #dddddd;
 	padding: 40px 30px 40px 30px;
-
+	background: #ffffff;
 }
 
 /*profile image on index*/
@@ -101,6 +110,16 @@ a:hover, a:active {
 	float: left;
 	margin: 0 15px 15px 0;
 	/*add in clearfix?*/
+}
+
+/*Contact Page stylings below*/
+
+.form-span {
+	width: 100%;
+}
+
+.message {
+	height: 300px;
 }
 
 /*had to manually change some things in order to make it look right for submit*/
@@ -115,23 +134,21 @@ a:hover, a:active {
 
 /*social content section*/
 
+/*below are the stylings for social links -- override the a selector.*/
+
 .social-content {
 	margin: 20px;
 	border: 2px solid #dddddd;
 	padding: 40px 30px 40px 30px;
 	display: flex;
 	flex-direction: column;
+	background: #ffffff;
+	height: 150px;
 }
 
-/*below are the stylings for social links -- override the a selector.*/
 .social *{
 	height: 50px;
-	margin: 2px;
-	flex-direction: row;
-}
-
-.social > *{
-	flex:1;
+	/*flex: 1;*/
 }
 
 /*footer css goes here*/
