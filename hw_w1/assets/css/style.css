@@ -112,16 +112,35 @@ a:hover, a:active {
 	/*add in clearfix?*/
 }
 
+/*Portfolio Stlyings below*/
+.websites {
+	position: relative;
+	display: inline-block;
+}
+
+.port-banner {
+    background: #4aaaa5;
+    color: white;
+    text-align: center;
+    position: absolute;
+    bottom: 15px;
+    padding: 15px 0 15px 0;
+    width: 100%;
+    font-family: 'Georgia';
+}
+
 /*Contact Page stylings below*/
 
 .form-span {
 	width: 100%;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 }
 
 .message {
 	height: 300px;
 }
+
+
 
 /*had to manually change some things in order to make it look right for submit*/
 .submit {
@@ -154,8 +173,20 @@ a:hover, a:active {
 
 .social *{
 	height: 50px;
-	/*flex: 1;*/
+	display: flex;
+	flex-direction: row;
 }
+
+.social-link {
+	width: 50px;
+	height: 50px;
+}
+
+.social-img {
+	width: 50px;
+	height: 50px;
+}
+
 
 /*footer css goes here*/
 
