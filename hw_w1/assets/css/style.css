@@ -116,6 +116,7 @@ a:hover, a:active {
 
 .form-span {
 	width: 100%;
+	margin-bottom: 20px;
 }
 
 .message {
@@ -129,7 +130,12 @@ a:hover, a:active {
 	font-family: 'Arial';
 	font-weight: 500;
 	padding: 10px 20px 10px 20px;
-	margin: 20px;
+	margin: 0;
+}
+
+/*Adding hover styling*/
+.submit:hover{
+	color: black;
 }
 
 /*social content section*/
