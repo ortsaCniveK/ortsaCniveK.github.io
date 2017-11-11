@@ -238,14 +238,99 @@ input[type=submit] {
   border: 0 none;
 }
 
-@media screen and (max-width: 980px)  {
-	
+@media only screen and (max-width: 980px)  {
+
+  /*Estimating about how much content size would need to be to match styling*/
+  .container {
+    max-width: 750px;
+  }
+  
+  /*adjusting content size for main-section and sidebar to match styling*/
+  .main-section {
+    max-width: 450px;
+  }
+
+  .sidebar {
+    max-width: 260px;
+  }
 }
 
-@media screen and (max-width: 980px)  {
-	
+@media only screen and (max-width: 768px)  {
+	.container{
+    max-width: 700px;
+  }
+  
+  /*Making each section take up all of the room*/
+  .main-section{
+    /*taking out floats, as they are unnecesary*/
+    float: none;
+    max-width: 700px;
+  }
+  
+  .sidebar {
+    /*removing floats, this time necessary*/
+    float: none;
+    max-width: 700px;
+  }
+
+  /*Need to make adjustments to Portfolio page, as it seems the floats are causing clipping*/
+  .work {
+    /*below fixes clipping, but leaves column behavior for the rest, divs are taking up all the room, strangely, even with width set to 50%*/
+    float: none;
+    width: 50%;
+  }
+
 }
 
-@media screen and (max-width: 980px)  {
-	
+@media only screen and (max-width: 640px)  {
+  /*giving breathing room to content, may need to adjust header in ID masthead*/
+	.container {
+    max-width: 580px;
+  }
+
+  /*Making Nav position static*/
+  #masthead {
+    position: static;
+  }
+
+  /*need to adjust navbar*/
+  /*to fix styling on navbar, need to exclude it from container behavior*/
+  /*Thankfully, this is a quick fix*/
+  #masthead .container {
+    max-width: 640px;
+  }
+
+  /*Make logo fill nav container*/
+  #logo {
+    width: 100%;
+  }
+
+  /*Make the links play nice and have proper padding*/
+  nav {
+    float: none;
+    line-height: 3.5;
+    /*removed margin top as it seems to have stuck around*/
+    margin-top: 0;
+  }
+
+  nav a {
+    /*easiest fix to me was to change padding to align, but I'm sure there's a better way (probs with flex)*/
+    padding-left: 95px;
+  }
+
+  /*need to adjust remove padding to match styling reqs*/
+  /*likely because nav is static in mobile*/
+  #main-container {
+    padding-top: 0;
+  }
+
+  /*Need to adjust profile picture size to fill*/
+  .auth-image {
+    width: 100%;
+  }
+
+  /*Need to adjust portfolio image size to fill*/
+  .work {
+    width: 100%;
+  }
 }
