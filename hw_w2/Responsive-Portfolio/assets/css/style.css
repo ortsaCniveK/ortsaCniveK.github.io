@@ -277,8 +277,8 @@ input[type=submit] {
   .work {
     /*below fixes clipping, but leaves column behavior for the rest, divs are taking up all the room, strangely, even with width set to 50%*/
     float: none;
-    width: 50%;
-  }
+	display: inline-block;
+}
 
 }
 
