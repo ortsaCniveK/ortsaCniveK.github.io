@@ -1,0 +1,45 @@
+Hangman modules and pseudo code
+
+on landing page (index should be all that is necessary)
+	game should show current information -- at start, it should show basic game info, such as:
+		Press any key to get started
+		Wins (current)
+		Current word ()
+		Number of Guesses Remaining
+		Letters already guessed.
+
+//--------------------GAME ITSELF--------------------//
+
+must be saved as an object
+	functions the game does should be saved as methods
+
+	!!-----Remember-----!!
+		global vars and methods above the object
+			globals, then objects, then calls.
+
+use key events to listen for the letters that users type
+
+Should have some repository of words that are valid for using in Hangman
+	when building, display word at the start, then set empty string with underscores using for loop for number of letter in the word
+		may need function in order to space the word properly, would be spaces between each letter on output, (one less than the length) no change to the array is needed.
+
+May need a hint picture? no -- picture should be from last game played
+	maybe set to post-first game blurb about the picture itself
+
+remember to store the letters already guessed, and add function to check to see if the user already guessed -- if so, guess number should remain unchanged.
+
+should have const set to current games won
+
+should have a game over screen
+
+should have some way of displaying exactly what the current word is, and displaying should break spacing once the correct letter is chosen
+	may need to have .contains() function
+
+Display is an underscore until the correct letter is displayed
+	save as two separate arrays to assure that the word is not displayed
+
+Once a win is achieved, increase the win counter by one and display
+	Additionally, may need to update with some new image as a hint?  Or perhaps the last word won -- double check the video
+	When the user wins, play a sound or some other confirmation that indicates a win has been achieved.
+
+Overall should be a pretty basic game, styling on top should be created after the game is up and running :)
