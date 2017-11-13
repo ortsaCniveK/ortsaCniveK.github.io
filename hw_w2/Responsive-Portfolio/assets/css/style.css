@@ -275,10 +275,10 @@ input[type=submit] {
 
   /*Need to make adjustments to Portfolio page, as it seems the floats are causing clipping*/
   .work {
-    /*below fixes clipping, but leaves column behavior for the rest, divs are taking up all the room, strangely, even with width set to 50%*/
     float: none;
-    width: 50%;
-  }
+    /*fixed column display on portfolio divs for work*/
+	display: inline-block;
+}
 
 }
 
