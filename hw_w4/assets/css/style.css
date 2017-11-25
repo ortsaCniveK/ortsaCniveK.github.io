@@ -1,0 +1,4 @@
+body {
+	/*trying to set a background image for the page, doesn't seem to work.*/
+	background-image: url("./assets/images/Background.jpg");
+}
