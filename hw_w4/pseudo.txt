@@ -1,0 +1,43 @@
+what do you see on the page:
+
+characters available for play (4) -- clicking toggles this as player character
+"Your Character"
+
+break (before choosing char, then filled in with the other options)
+"Enemies available to attack"
+	this is where player chooses enemy
+
+"Fight Section"
+Attack Button
+
+"Defender"
+Shows current enemy being fought
+
+Pseudo Code:
+
+Each character should have Health Points, Attack Power, Counter Attack Power attributes
+	Attack power should have a function that increases its attack power every time an attack is made (ex 6, 12, 18, 24, 30...)
+
+		attack () {
+			enemy.healthPoints -= current;
+			//deals dmg equal to the current attack
+
+			current += 6
+			//change the value of the current attack by whatever the base is, var should be def outside this function.
+
+			this.healthPoints -= enemy.counterAttack
+			//implements the counter attack immediately, and leaves unchanged
+		}
+
+	Counter attack power should stay consistent
+		SHOULD BE CONST
+
+	each of these attributes should be different for each character
+
+	no char can heal health
+
+	no reset in health between fights
+
+	each character should have a way of winning (should be an unspecified path the player has to figure out)
+
+add css to make it FANCY

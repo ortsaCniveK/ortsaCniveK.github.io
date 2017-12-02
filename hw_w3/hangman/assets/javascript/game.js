@@ -60,7 +60,7 @@ $(document).ready(function() {
 			console.log('Guesses remaining ' + remainGuess); 
 			lettersGuessed.push(letter);
 			console.log('Guess List: ' + lettersGuessed);
-			printArray(lettersGuessed, '#alreadyGuessed');
+			printArray(lettersGuessed, guessList);
 		}
 		else {
 			console.log('processing correct answer...')
@@ -90,11 +90,10 @@ $(document).ready(function() {
 
 	//general array printer to parent element using jQuery selectors
 	function printArray(arr, parent) {
-		//set current text to nothing to ensure proper printing
-		$(parent).text("");
 		//then loop through array, appending all entries
 		for (var i = 0; i < arr.length; i++){
-			$(parent).append(arr[i]);
+			console.log('Appending each element in array')
+			parent.append(arr[i]);
 		}
 	}
 
@@ -106,14 +105,10 @@ $(document).ready(function() {
 
 	//debugging
 	newWord();
+	console.log('below should print the guesses remaining, then the array of guesses, then the print array functions.')
 	guess('s');
 	guess('s');
-	guess('z');
-	guess('x');
-	guess('y');
-	guess('l');
-	guess('k');
-	guess('j');
 	guess('o');
-	console.log(remainGuess);
+	guess('t');
+
 });

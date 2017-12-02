@@ -1,0 +1,20 @@
+THINGS TO DO:
+
+THEME:  Stranger things
+
+GET more Stranger Things gifs
+
+Get ITC Benguiat font - free
+	This is the Stranger Things font
+
+create generalized timer, times should vary for each question, could be based on character length?
+
+might need to create a div with general congratulations screen, or maybe even an extra page with a redirect back and forth
+	may need to leave it empty to start, then the congratulations screen would display the right answer, start a 5-second timer, then switch back
+
+when time interval runs out, give an alert that they are out of time and display the correct answer
+		if using bootstrap, could change the state of the answer entry/custom css with an outline around the correct answer
+
+keep count of correct and wrong answers
+
+	option for restarting the game should NOT refresh the page -- maybe just have it so it clears all the answers and restarts
