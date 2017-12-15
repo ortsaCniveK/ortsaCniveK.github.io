@@ -12,16 +12,22 @@
 <body>
 	<!-- creating a jumbotron for adding more buttons -->
 	<div class="jumbotron">
+		<!-- Title for Jumbotron -->
+		<h1>Animal Gif Generator</h1>
+		<p>Enter an animal you'd like to see GIFs of!</p>
+
 		<div class="form-group">
 			<label for="inputAnimal">Animal</label>
 			<input type="text" class="form-control" id="inputAnimal" aria-describedby="animalJoke" placeholder="Aardvark">
 			<small id="animalJoke" class="form-text text-muted">Release the beast.</small>
 		</div>
-		<button type="submit" class="btn btn-primary">Submit</button>
+		<button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
 		
 		<!-- Below will be a list of buttons the user can create -->
 		<!-- These will all access and use the GIPHY API -->
 		<br>
+
+		<p>Or, alternatively, click one of the buttons below to get started.</p>
 		
 		<div class="container" id="button-holder">
 			
