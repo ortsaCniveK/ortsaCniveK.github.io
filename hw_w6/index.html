@@ -21,7 +21,7 @@
 			<input type="text" class="form-control" id="inputAnimal" aria-describedby="animalJoke" placeholder="Aardvark">
 			<small id="animalJoke" class="form-text text-muted">Release the beast.</small>
 		</div>
-		<button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+		<button id="submit" type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
 		
 		<!-- Below will be a list of buttons the user can create -->
 		<!-- These will all access and use the GIPHY API -->
@@ -30,6 +30,7 @@
 		<p>Or, alternatively, click one of the buttons below to get started.</p>
 		
 		<div class="container" id="button-holder">
+			<button class="btn btn-secondary button" data-query="cat">Test</button>
 			
 		</div>
 	</div>
@@ -49,8 +50,54 @@
 
 	<!-- Homebrew JS -->
 	<script>
+		//define key and url to be used
+		var key = '8GXlv26l4t3qUqsheKfB0zoCYGs9Ck8k';
+
+		//create general button creator, since bootstrap forms are a bit weird
+		function createBtn(query){
+			//pass in the key and create a query obj to be passed to param()
+			//note the q is declared but not defined, since it is a required param
+			//this also helps test if query is empty
+			var queryObj = {	
+				url : 'http://api.giphy.com/v1/gifs/search?',
+				apikey : key,
+				q : ''
+			}
+
+			//if the query is blank, alert the user and return out.
+			if(query === ''){
+				alert('Please enter an animal.');
+				return;
+			}
+
+			console.log('creating button')
+
+			//set the query in the API call with query passed
+			queryObj.q = query;
+
+			//button creation
+			//create button with class animalButton
+
+			//creating button
+			var button = $('<button>').attr;
+
+		}
+
+		function displayGifs(){
+
+		}
 
 		// onclick should be something generalized so they can output formatted gifs in bootstrap
+		$('#submit').on('click', function(){
+			//there should be a function here to call the creation of a new button
+
+			//collect the query from the text entered
+			var query = $(inputAnimal).val().trim();
+
+			//call the function to create a new button
+			createBtn(query);
+		})
+
 		
 	</script>
 </body>
