@@ -16,6 +16,7 @@
 		<h1>Animal Gif Generator</h1>
 		<p>Enter an animal you'd like to see GIFs of!</p>
 
+		<!-- Input Area for adding and creating Queries -->
 		<div class="form-group">
 			<label for="inputAnimal">Animal</label>
 			<input type="text" class="form-control" id="inputAnimal" aria-describedby="animalJoke" placeholder="Aardvark">
@@ -53,10 +54,7 @@
 
 	<!-- Homebrew JS -->
 	<script>
-		//define key and url to be used
-		var key = '8GXlv26l4t3qUqsheKfB0zoCYGs9Ck8k';
-		var qurl = 'http://api.giphy.com/v1/gifs/search?limit=12&';
-
+		//--------------------FUNCTIONS--------------------//
 		//create general button creator, since bootstrap forms are a bit weird
 		function createBtn(query){
 			//button creation
@@ -76,13 +74,15 @@
 			//add text to button, set it to the query
 			button.text(query);
 
+			//append the button to the holder
 			$('#button-holder').append(button);
-
-			//NOTE
-				//added buttons have no margins
 		}
 
 		function displayGifs(query){
+			//define key and url to be used later on in API requests
+			var key = '8GXlv26l4t3qUqsheKfB0zoCYGs9Ck8k';
+			var qurl = 'http://api.giphy.com/v1/gifs/search?limit=12&';
+
 			//pass in the key and create a query obj to be passed to param()
 			//Additionally, this is a little more complex than it really needs to
 			//be, but wanted to cement using the .param() function.
@@ -177,6 +177,8 @@
 
 		}
 
+		//--------------------ONCLICKS--------------------//
+
 		// submit button is static, so we can simply call id
 		$('#submit').on('click', function(){
 			//collect the query from the text entered
@@ -190,17 +192,17 @@
 
 			//call the function to create a new button
 			createBtn(query);
-			//call the displayGis function upon clicking the submit button
+			//call the displayGifs function upon clicking the submit button
 			displayGifs(query);
 		})
 
-		//below are dynamic, so we call the document onclick
+		//onclicks below are dynamic, so we call the document onclick, setting the right class up
 		$(document).on('click', '.gifButton', function(){
 			//collect the query
-			var q = $(this).attr('data-query');
+			var query = $(this).attr('data-query');
 
 			//call the display gifs section, passing in the query
-			displayGifs(q);
+			displayGifs(query);
 		});
 
 		$(document).on('click', '.gif', function(){
@@ -212,10 +214,24 @@
 				$(this).attr('src', $(this).attr('data-animate'));
 				$(this).attr('data-state', 'moving');
 			} else {
-				//else pause
+				//else pause the gif
 				$(this).attr('src', $(this).attr('data-still'));
 				$(this).attr('data-state', 'still');
 			}
+		});
+
+		//--------------------PAGE LOAD--------------------//
+
+		//on page load, create an array full of queries,
+		var startBtns = ['Cats', 'Dogs', 'Birds', 'Cows', 'Pigs', 'Pandas', 'Otters', 'Turtles', 'Bunnies', 'Lobsters', 'Octopi'];
+		//then pass them into the createBtn function.
+		//made 11 queries, to fill a whole 'row'
+		//apparently Bootstrap doesn't like it's own layout :P
+
+		//create buttons for each element in the array using the vals as queries
+		//using a forEach, because, WHY NOT
+		startBtns.forEach(function(element){
+			createBtn(element);
 		});
 
 		
