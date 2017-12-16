@@ -7,7 +7,7 @@
 	<!-- Link to Bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 	
-	<!-- Link to Fonts being used -->
+	<!-- Link to Font being used -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 	
 	<style>
@@ -51,12 +51,14 @@
 		<p>Enter an animal you'd like to see GIFs of!</p>
 
 		<!-- Input Area for adding and creating Queries -->
+		<form>
 		<div class="form-group">
 			<label for="inputAnimal">Animal</label>
 			<input type="text" class="form-control" id="inputAnimal" aria-describedby="animalJoke" placeholder="Aardvark">
 			<small id="animalJoke" class="form-text text-muted">Release the beast.</small>
 		</div>
 		<button id="submit" type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+		</form>
 
 		<br>
 
@@ -88,6 +90,10 @@
 
 	<!-- Homebrew JS -->
 	<script>
+		//--------------------NOTE--------------------//
+		// I just ended up using Animals, because I was focusing more on functionality, 
+		// but I will probably change the topics if I come up with a good one.
+
 		//--------------------FUNCTIONS--------------------//
 		//create general button creator, since bootstrap forms are a bit weird
 		function createBtn(query){
@@ -212,7 +218,8 @@
 		//--------------------ONCLICKS--------------------//
 
 		// submit button is static, so we can simply call id
-		$('#submit').on('click', function(){
+		$('#submit').on('click', function(event){
+			event.preventDefault();
 			//collect the query from the text entered
 			var query = $(inputAnimal).val().trim();
 
@@ -251,6 +258,12 @@
 				$(this).attr('data-state', 'still');
 			}
 		});
+
+		$('<form>').keypress(function(event){
+			if (event.keyCode === 13){
+				event.preventDefault();
+			}
+		})
 
 		//--------------------PAGE LOAD--------------------//
 
