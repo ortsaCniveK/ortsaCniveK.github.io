@@ -102,12 +102,10 @@
 
 					//then start adding things inside
 					//debug
-					console.log(response);
 
 					//create an array set to the response data
 					var arr = response.data;
 
-					console.log(arr);
 					//create var to track current index so double for loop does what it needs to
 					var currentIndex = 0;
 
@@ -120,7 +118,6 @@
 						//I realize there's probably a simpler way of doing this, just really wanted to make sure I knew how to use splice
 						var sliced = arr.slice(currentIndex, currentIndex + 4)
 
-						console.log(sliced);
 						
 						for (var j = 0; j < sliced.length; j++){
 							//create a card with class card to hold the content
@@ -136,8 +133,6 @@
 							var still = sliced[j].images.fixed_height_still.url;
 							var moving = sliced[j].images.fixed_height.url;
 
-							console.log(still)
-							console.log(moving)
 
 							//add in the source of the gif from the current gif obj
 							img.attr('src', still);
@@ -184,8 +179,6 @@
 
 		// submit button is static, so we can simply call id
 		$('#submit').on('click', function(){
-			//there should be a function here to call the creation of a new button
-
 			//collect the query from the text entered
 			var query = $(inputAnimal).val().trim();
 
@@ -211,7 +204,6 @@
 		});
 
 		$(document).on('click', '.gif', function(){
-			console.log('trying to change state');
 			//collect the current state
 			var state = $(this).attr('data-state');
 
