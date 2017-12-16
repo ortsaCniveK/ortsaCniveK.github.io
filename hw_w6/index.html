@@ -7,11 +7,45 @@
 	<!-- Link to Bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 	
+	<!-- Link to Fonts being used -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+	
+	<style>
+		*{
+			font-family: 'Montserrat', sans-serif;
+		}
 
+		#body {
+			background: url(https://c1.staticflickr.com/5/4403/36388952880_c9d523338f_o.jpg);
+		}
+
+		.jumbotron {
+			/* Below maked the Jumbotron background transparent */
+			background-color: transparent !important;
+		}
+
+		.card {
+			/* Same thing for the cards, since they default to white */
+			background-color: transparent !important;
+			border-color: transparent !important;
+		}
+
+
+		/* Specialized colors for buttons */
+		#submit {
+			background: rgb(245,127,23);
+			border-color: rgb(245,127,23);
+		}
+
+		.gifButton{
+			background: rgb(66,66,66);
+			border-color: rgb(66,66,66);
+		}
+	</style>
 </head>
-<body>
+<body id="body">
 	<!-- creating a jumbotron for adding more buttons -->
-	<div class="jumbotron">
+	<div class="jumbotron bg-light">
 		<!-- Title for Jumbotron -->
 		<h1>Animal Gif Generator</h1>
 		<p>Enter an animal you'd like to see GIFs of!</p>
@@ -69,7 +103,7 @@
 			button.attr('data-query', query);
 
 			//add margins, b/c bootstrap don't like it
-			button.attr('style', 'margin: 2px 2px 0 0');
+			button.attr('style', 'margin: 10px 10px 0 0');
 
 			//add text to button, set it to the query
 			button.text(query);
@@ -100,19 +134,16 @@
 					//empty out anything inside the current gif-holder
 					$('#gif-holder').empty();
 
-					//then start adding things inside
-					//debug
-
 					//create an array set to the response data
 					var arr = response.data;
 
-					//create var to track current index so double for loop does what it needs to
+					//create var to track current index so nested for loop knows where in arr we are
 					var currentIndex = 0;
 
 					//loop through 3 times to create a row of gifs in a card group
 					for (var i = 0; i < 3; i++){
 						var row = $('<div>').attr('class', 'row');
-						var cardGroup = $('<div>').attr('class', 'card-group');
+						var cardDeck = $('<div>').attr('class', 'card-deck');
 
 						//slice the array into 4 gif object array, using the current index
 						//I realize there's probably a simpler way of doing this, just really wanted to make sure I knew how to use splice
@@ -122,8 +153,9 @@
 						for (var j = 0; j < sliced.length; j++){
 							//create a card with class card to hold the content
 							var card = $('<div>').attr('class', 'card');
-							//create card body to hold the text
-							var cardBody = $('<div>').attr('class', 'card-body');
+							//create card Footer to hold the text
+							//using footers, because they kind of stick to the img
+							var cardFooter = $('<div>').attr('class', 'card-footer');
 
 							//create an image tag with proper bootstrap class
 							//add gif tag for onclick later
@@ -145,30 +177,30 @@
 							img.attr('data-animate', moving);
 							img.attr('data-still', still);
 
-							//create card with appropriate class
-							var rating = $('<h5>').attr('class', 'text-muted card-title');
+							//create card footer text with appropriate class
+							var rating = $('<small>').attr('class', 'text-muted card-title');
 
 							//create Rating text
 							rating.text('Rating: ' + sliced[j].rating);
 
 							//push rating text onto the card body
-							cardBody.append(rating);
+							cardFooter.append(rating);
 
 							//push image and text onto the card
 							card.append(img);
 
 							//push card text onto the card itself
-							card.append(cardBody);
+							card.append(cardFooter);
 
-							//push the card onto the cardGroup div
-							cardGroup.append(card);
+							//push the card onto the cardDeck div
+							cardDeck.append(card);
 						}
 
 						//increase current index by four to continue to the next chunk
 						currentIndex += 4;
 
-						//push the cardgroup onto the row
-						row.append(cardGroup);
+						//push the cardDeck onto the row
+						row.append(cardDeck);
 
 						//push the row with the card group onto the gif holder
 						$('#gif-holder').append(row);
@@ -209,12 +241,12 @@
 			//collect the current state
 			var state = $(this).attr('data-state');
 
-			//if the state is currently still, animate
+			//if the state is currently still, animate and set the state to moving
 			if (state === 'still'){
 				$(this).attr('src', $(this).attr('data-animate'));
 				$(this).attr('data-state', 'moving');
 			} else {
-				//else pause the gif
+				//else pause the gif, set state to still
 				$(this).attr('src', $(this).attr('data-still'));
 				$(this).attr('data-state', 'still');
 			}
