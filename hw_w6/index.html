@@ -22,15 +22,18 @@
 			<small id="animalJoke" class="form-text text-muted">Release the beast.</small>
 		</div>
 		<button id="submit" type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
-		
-		<!-- Below will be a list of buttons the user can create -->
-		<!-- These will all access and use the GIPHY API -->
+
 		<br>
 
 		<p>Or, alternatively, click one of the buttons below to get started.</p>
 		
-		<div class="container" id="button-holder">
-			<button class="btn btn-secondary button" data-query="cat">Test</button>
+		<!-- Below will be a list of buttons the user can create -->
+		<!-- These will all access and use the GIPHY API -->
+		<div class="container-fluid">
+
+			<div class="row" id="button-holder">
+				<!-- This is where the buttons are held -->
+			</div>
 			
 		</div>
 	</div>
@@ -52,17 +55,139 @@
 	<script>
 		//define key and url to be used
 		var key = '8GXlv26l4t3qUqsheKfB0zoCYGs9Ck8k';
+		var qurl = 'http://api.giphy.com/v1/gifs/search?limit=12&';
 
 		//create general button creator, since bootstrap forms are a bit weird
 		function createBtn(query){
+			//button creation
+			//create button with class gifButton
+
+			//creating button with secondary color and correct classing and sizing
+			var button = $('<button>').attr('class', 'col-sm-1 btn btn-secondary btn-lg gifButton');
+			//change button to type button for Boostrap
+			button.attr('type', 'button');
+
+			//set the data to the query for the onclicks later
+			button.attr('data-query', query);
+
+			//add margins, b/c bootstrap don't like it
+			button.attr('style', 'margin: 2px 2px 0 0');
+
+			//add text to button, set it to the query
+			button.text(query);
+
+			$('#button-holder').append(button);
+
+			//NOTE
+				//added buttons have no margins
+		}
+
+		function displayGifs(query){
 			//pass in the key and create a query obj to be passed to param()
-			//note the q is declared but not defined, since it is a required param
-			//this also helps test if query is empty
-			var queryObj = {	
-				url : 'http://api.giphy.com/v1/gifs/search?',
-				apikey : key,
-				q : ''
+			//Additionally, this is a little more complex than it really needs to
+			//be, but wanted to cement using the .param() function.
+			var queryObj = {
+				apikey : key
 			}
+
+			//set the query in the API call with query passed
+			queryObj.q = query;
+
+
+			//pass in the url and the serialized queryObj
+			$.get(qurl + $.param(queryObj))
+				.done(function(response){
+					//empty out anything inside the current gif-holder
+					$('#gif-holder').empty();
+
+					//then start adding things inside
+					//debug
+					console.log(response);
+
+					//create an array set to the response data
+					var arr = response.data;
+
+					console.log(arr);
+					//create var to track current index so double for loop does what it needs to
+					var currentIndex = 0;
+
+					//loop through 3 times to create a row of gifs in a card group
+					for (var i = 0; i < 3; i++){
+						var row = $('<div>').attr('class', 'row');
+						var cardGroup = $('<div>').attr('class', 'card-group');
+
+						//slice the array into 4 gif object array, using the current index
+						//I realize there's probably a simpler way of doing this, just really wanted to make sure I knew how to use splice
+						var sliced = arr.slice(currentIndex, currentIndex + 4)
+
+						console.log(sliced);
+						
+						for (var j = 0; j < sliced.length; j++){
+							//create a card with class card to hold the content
+							var card = $('<div>').attr('class', 'card');
+							//create card body to hold the text
+							var cardBody = $('<div>').attr('class', 'card-body');
+
+							//create an image tag with proper bootstrap class
+							//add gif tag for onclick later
+							var img = $('<img>').attr('class', 'card-img-top gif');
+
+							//create vars for still or animated links
+							var still = sliced[j].images.fixed_height_still.url;
+							var moving = sliced[j].images.fixed_height.url;
+
+							console.log(still)
+							console.log(moving)
+
+							//add in the source of the gif from the current gif obj
+							img.attr('src', still);
+
+							//add in data val to track still or in motion gif
+							//set to still to start
+							img.attr('data-state', 'still');
+
+							//add in attributes for still or moving gif
+							img.attr('data-animate', moving);
+							img.attr('data-still', still);
+
+							//create card with appropriate class
+							var rating = $('<h5>').attr('class', 'text-muted card-title');
+
+							//create Rating text
+							rating.text('Rating: ' + sliced[j].rating);
+
+							//push rating text onto the card body
+							cardBody.append(rating);
+
+							//push image and text onto the card
+							card.append(img);
+
+							//push card text onto the card itself
+							card.append(cardBody);
+
+							//push the card onto the cardGroup div
+							cardGroup.append(card);
+						}
+
+						//increase current index by four to continue to the next chunk
+						currentIndex += 4;
+
+						//push the cardgroup onto the row
+						row.append(cardGroup);
+
+						//push the row with the card group onto the gif holder
+						$('#gif-holder').append(row);
+					}
+				})
+
+		}
+
+		// submit button is static, so we can simply call id
+		$('#submit').on('click', function(){
+			//there should be a function here to call the creation of a new button
+
+			//collect the query from the text entered
+			var query = $(inputAnimal).val().trim();
 
 			//if the query is blank, alert the user and return out.
 			if(query === ''){
@@ -70,33 +195,36 @@
 				return;
 			}
 
-			console.log('creating button')
-
-			//set the query in the API call with query passed
-			queryObj.q = query;
-
-			//button creation
-			//create button with class animalButton
-
-			//creating button
-			var button = $('<button>').attr;
-
-		}
-
-		function displayGifs(){
-
-		}
-
-		// onclick should be something generalized so they can output formatted gifs in bootstrap
-		$('#submit').on('click', function(){
-			//there should be a function here to call the creation of a new button
-
-			//collect the query from the text entered
-			var query = $(inputAnimal).val().trim();
-
 			//call the function to create a new button
 			createBtn(query);
+			//call the displayGis function upon clicking the submit button
+			displayGifs(query);
 		})
+
+		//below are dynamic, so we call the document onclick
+		$(document).on('click', '.gifButton', function(){
+			//collect the query
+			var q = $(this).attr('data-query');
+
+			//call the display gifs section, passing in the query
+			displayGifs(q);
+		});
+
+		$(document).on('click', '.gif', function(){
+			console.log('trying to change state');
+			//collect the current state
+			var state = $(this).attr('data-state');
+
+			//if the state is currently still, animate
+			if (state === 'still'){
+				$(this).attr('src', $(this).attr('data-animate'));
+				$(this).attr('data-state', 'moving');
+			} else {
+				//else pause
+				$(this).attr('src', $(this).attr('data-still'));
+				$(this).attr('data-state', 'still');
+			}
+		});
 
 		
 	</script>
