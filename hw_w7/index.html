@@ -16,7 +16,7 @@
 		</div>
 
 		<!-- Create List Group in order to make it look properly as per docs -->
-		<!-- Employee Table Goes here -->
+		<!-- Train Table Goes here -->
 		<ul class="list-group">
 			<li class="list-group-item active"> Current Train Schedule</li>
 			<li class="list-group-item">
@@ -62,10 +62,10 @@
 					</div>
 					<div class="form-group">
 						<label for="startTime">First Train Time (HH:mm - military time)</label>
-						<input class="form-control" id="startTime" placeholder="Date">
+						<input class="form-control" id="startTime" placeholder="HH:mm">
 					</div>
 					<div class="form-group">
-						<label for="rate">Frequency</label>
+						<label for="rate">Frequency (min)</label>
 						<input class="form-control" id="rate" placeholder="Rate">
 					</div>
 
@@ -123,8 +123,8 @@
 	  	//if any items are blank, alert user, return out
 	  	if (name === '') {alert('Please enter Name.'); return;}
 	  	if (destination === '') {alert('Please enter destination.'); return;}
-	  	if (start === '') {alert('Please enter Starting Date.'); return;}// need to add checks for date inputted -- nah
-  		if (rate === '') {alert('Please enter Rate'); return;}
+	  	if (start === '') {alert('Please enter Starting Date.'); return;}
+  		if (rate === '') {alert('Please enter Frequency.'); return;}
 
 	  	//push data onto database
 	  	db.ref().push({
@@ -136,43 +136,60 @@
 	  });
 
 	  db.ref().on('child_added', function(snapshot){
-	  	var employee = snapshot.val();
+	  	var train = snapshot.val();
 
 	  	//create row we'll put stuff in
 	  	var row = $('<tr>');
 
 	  	//collect data from childSnapshot
-	  	var newName = employee.name;
-	  	var newdestination = employee.destination;
-	  	var newStart = employee.start;
-	  	var newRate = employee.rate;
+	  	var newName = train.name;
+	  	var newDestination = train.destination;
+	  	var newStart = train.start;
+	  	var newRate = train.rate;
 
 	  	//create new vals to input into the array
-	  	var monthDiff = 0;
-	  	var totalPaid = 0;
+	  	var nextArrival;
+	  	var minutesAway;
 
-	  	//create a moment object from the employee record
-	  	//I am assuming the user passed in a valid date format, checking is going to be a pain.
-	  	var startTime = moment(newStart, 'DD/MM/YY');
-	  	//create var to hold the current date
+	  	//create a moment object from the Train record we're collecting
+	  	//this also parses the text with the appropriate format into the moment obj
+	  	var firstArrival = moment(newStart, 'HH:mm');
+
+	  	//create var to hold the current date and time
 	  	var now = moment();
-	  	//set to the monthDiff 
-		monthDiff = startDate.diff(now, 'months');
 
-		//calculate and set the total amt paid
-		totalPaid = monthDiff * newRate;
+	  	//add time to the first arrival until the difference between the new time 
+	  	//and the current time is positive
+	  	while ((firstArrival.diff(now, 'minutes')) <= 0){
+	  		firstArrival.add(newRate, 'm');
+
+	  		console.log('finding new nextArrival');
+	  	}
+	  	//create a temp variable to pass in the correct time string
+	  	var time = '';
+	  	time += firstArrival.get('hour');
+	  	console.log(firstArrival.get('hour'));
+	  	time += ':';
+	  	time += firstArrival.get('minutes');
+
+  	  	//set the changed firstArrival to the nextArrival 
+  		nextArrival = time;
+
+  		//add in value for the minutes left until the next arrival from the calculated next arrival
+  		minutesAway = firstArrival.diff(now, 'minutes');
 
 	  	//create array to iterate through vals
-	  	var arr = [newName, newdestination, newStart, monthDiff, newRate, totalPaid];
+	  	var arr = [newName, newDestination, newRate, nextArrival, minutesAway];
 
 	  	for(var i = 0; i < arr.length; i++){
 
-	  		//create entry with appropriate scope
+	  		//create entry with appropriate scope for bootstrap
 	  		var entry = $('<th>').attr('scope', 'col').text(arr[i]);
 
 	  		row.append(entry);
 	  	}
 
+	  	//append it to the list!
 	  	$('#tableBody').append(row);
 	  }, function(error){
 	  	console.log('Error Object Passed.');
