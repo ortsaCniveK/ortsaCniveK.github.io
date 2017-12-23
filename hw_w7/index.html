@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Train Schedule</title>
 
 	<!-- Link Bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
@@ -11,14 +11,14 @@
 	<div class="container">
 		<!-- Main Page Header -->
 		<div class="jumbotron text-center">
-			<STRONG><h1>Employee Data Management</h1></STRONG>
-			<h3>A Comprehensive Directory of Employee Billable Hours</h3>
+			<STRONG><h1>Train Schedule</h1></STRONG>
+			<h3>Because going to the station for the schedule is for chumps.</h3>
 		</div>
 
 		<!-- Create List Group in order to make it look properly as per docs -->
 		<!-- Employee Table Goes here -->
 		<ul class="list-group">
-			<li class="list-group-item active"> Current Employees</li>
+			<li class="list-group-item active"> Current Train Schedule</li>
 			<li class="list-group-item">
 
 				<div class="row">
@@ -26,12 +26,11 @@
 					<table class="table table-responsive-md">
 						<thead>
 							<tr>
-								<th scope="col">Employee Name</th>
-								<th scope="col">Role</th>
-								<th scope="col">Start Date</th>
-								<th scope="col">Months Worked</th>
-								<th scope="col">Monthly Rate ($)</th>
-								<th scope="col">Total Billed ($)</th>
+								<th scope="col">Train Name</th>
+								<th scope="col">Destination</th>
+								<th scope="col">Frequency (min)</th>
+								<th scope="col">Next Arrival</th>
+								<th scope="col">Minutes Away</th>
 							<tr>
 						</thead>
 
@@ -50,23 +49,23 @@
 		<!-- Again, list group to make it look properly -->
 		<!-- Form goes here -->
 		<ul class="list-group">
-			<li class="list-group-item active">Add Employee</li>
+			<li class="list-group-item active">Add Train</li>
 			<li class="list-group-item">
 				<form>
 					<div class="form-group">
-						<label for="name">Employee Name</label>
+						<label for="name">Train Name</label>
 						<input class="form-control" id="name" placeholder="Name">
 					</div>
 					<div class="form-group">
-						<label for="role">Role</label>
-						<input class="form-control" id="role" placeholder="Role">
+						<label for="destination">Destination</label>
+						<input class="form-control" id="destination" placeholder="Destination">
 					</div>
 					<div class="form-group">
-						<label for="startDate">Start Date (DD/MM/YY - ex: 01/01/89)</label>
-						<input class="form-control" id="startDate" placeholder="Date">
+						<label for="startTime">First Train Time (HH:mm - military time)</label>
+						<input class="form-control" id="startTime" placeholder="Date">
 					</div>
 					<div class="form-group">
-						<label for="rate">Monthly Rate</label>
+						<label for="rate">Frequency</label>
 						<input class="form-control" id="rate" placeholder="Rate">
 					</div>
 
@@ -107,7 +106,7 @@
 
 	  //initial vals
 	  var name = '';
-	  var role = '';
+	  var destination = '';
 	  var start = '';
 	  var rate = 0;
 
@@ -117,20 +116,20 @@
 
 	  	//collect the data from the html
 	  	name = $('#name').val().trim();
-	  	role = $('#role').val().trim();
-	  	start = $('#startDate').val().trim();
+	  	destination = $('#destination').val().trim();
+	  	start = $('#startTime').val().trim();
 	  	rate = $('#rate').val().trim();
 
 	  	//if any items are blank, alert user, return out
 	  	if (name === '') {alert('Please enter Name.'); return;}
-	  	if (role === '') {alert('Please enter Role.'); return;}
+	  	if (destination === '') {alert('Please enter destination.'); return;}
 	  	if (start === '') {alert('Please enter Starting Date.'); return;}// need to add checks for date inputted -- nah
   		if (rate === '') {alert('Please enter Rate'); return;}
 
 	  	//push data onto database
 	  	db.ref().push({
 	  		name : name,
-	  		role : role,
+	  		destination : destination,
 	  		start : start,
 	  		rate : rate
 	  	});
@@ -144,7 +143,7 @@
 
 	  	//collect data from childSnapshot
 	  	var newName = employee.name;
-	  	var newRole = employee.role;
+	  	var newdestination = employee.destination;
 	  	var newStart = employee.start;
 	  	var newRate = employee.rate;
 
@@ -154,7 +153,7 @@
 
 	  	//create a moment object from the employee record
 	  	//I am assuming the user passed in a valid date format, checking is going to be a pain.
-	  	var startDate = moment(newStart, 'DD/MM/YY');
+	  	var startTime = moment(newStart, 'DD/MM/YY');
 	  	//create var to hold the current date
 	  	var now = moment();
 	  	//set to the monthDiff 
@@ -164,7 +163,7 @@
 		totalPaid = monthDiff * newRate;
 
 	  	//create array to iterate through vals
-	  	var arr = [newName, newRole, newStart, monthDiff, newRate, totalPaid];
+	  	var arr = [newName, newdestination, newStart, monthDiff, newRate, totalPaid];
 
 	  	for(var i = 0; i < arr.length; i++){
 
