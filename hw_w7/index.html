@@ -162,15 +162,39 @@
 	  	//and the current time is positive
 	  	while ((firstArrival.diff(now, 'minutes')) <= 0){
 	  		firstArrival.add(newRate, 'm');
-
-	  		console.log('finding new nextArrival');
 	  	}
 	  	//create a temp variable to pass in the correct time string
+
 	  	var time = '';
-	  	time += firstArrival.get('hour');
-	  	console.log(firstArrival.get('hour'));
-	  	time += ':';
-	  	time += firstArrival.get('minutes');
+	  	//check to see if am or pm
+	  	if (firstArrival.get('hour') >= 12){
+	  		//temp var for hour
+	  		var pm;
+	  		//handing noon, else simply subtract 12 from the time
+	  		(firstArrival.get('hour') === 12) ? (pm = 12) : (pm = firstArrival.get('hour')-12);
+	  		time += pm;
+	  		time += ':';
+	  		var min;
+	  		//check to see if the minutes is less that ten, else just get minutes
+	  		(firstArrival.get('minute') < 10) ? (min = '0' + firstArrival.get('minute')) : (min = firstArrival.get('minute'));
+	  		time += min;
+	  		time += ' pm';
+	  	}
+	  	else {
+	  		//then the time is am
+	  		//create temp var for the hour
+	  		var am;
+	  		//handling midnight, else just get the hour
+	  		(firstArrival.get('hour') === 0) ? (am = 12) : (am = firstArrival.get('hour'));
+	  		time += am;
+	  		time += ':';
+	  		var min;
+	  		//check to see if the minutes is less that ten, else just get minutes
+	  		(firstArrival.get('minute') < 10) ? (min = '0' + firstArrival.get('minute')) : (min = firstArrival.get('minute'));
+	  		time += min;
+	  		time += ' am';
+	  	}
+	  	
 
   	  	//set the changed firstArrival to the nextArrival 
   		nextArrival = time;
