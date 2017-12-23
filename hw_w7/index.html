@@ -157,6 +157,7 @@
 
 	  	//create var to hold the current date and time
 	  	var now = moment();
+	  	console.log(now);
 
 	  	//add time to the first arrival until the difference between the new time 
 	  	//and the current time is positive
@@ -200,7 +201,9 @@
   		nextArrival = time;
 
   		//add in value for the minutes left until the next arrival from the calculated next arrival
-  		minutesAway = firstArrival.diff(now, 'minutes');
+  		//needed to add 1 so the difference would not be when the time is going to change, but when it happens
+  		//double checked to make sure that the time was right, seems like it's a quirk in moment.js
+  		minutesAway = firstArrival.diff(now, 'minutes') + 1;
 
 	  	//create array to iterate through vals
 	  	var arr = [newName, newDestination, newRate, nextArrival, minutesAway];
