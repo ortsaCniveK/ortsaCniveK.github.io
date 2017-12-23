@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+	<!-- Link Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+</head>
+<body class="bg-dark">
+
+	<div class="container">
+		<!-- Main Page Header -->
+		<div class="jumbotron text-center">
+			<STRONG><h1>Employee Data Management</h1></STRONG>
+			<h3>A Comprehensive Directory of Employee Billable Hours</h3>
+		</div>
+
+		<!-- Create List Group in order to make it look properly as per docs -->
+		<!-- Employee Table Goes here -->
+		<ul class="list-group">
+			<li class="list-group-item active"> Current Employees</li>
+			<li class="list-group-item">
+
+				<div class="row">
+					<!-- Add in responsive table at a md breakpoint -->
+					<table class="table table-responsive-md">
+						<thead>
+							<tr>
+								<th scope="col">Employee Name</th>
+								<th scope="col">Role</th>
+								<th scope="col">Start Date</th>
+								<th scope="col">Months Worked</th>
+								<th scope="col">Monthly Rate ($)</th>
+								<th scope="col">Total Billed ($)</th>
+							<tr>
+						</thead>
+
+						<!-- Placeholders will be added in here.-->
+						<tbody id="tableBody">
+						</tbody>
+					</table>
+				</div>
+				
+			</li>
+		</ul>
+
+		<br>
+		<br>
+		
+		<!-- Again, list group to make it look properly -->
+		<!-- Form goes here -->
+		<ul class="list-group">
+			<li class="list-group-item active">Add Employee</li>
+			<li class="list-group-item">
+				<form>
+					<div class="form-group">
+						<label for="name">Employee Name</label>
+						<input class="form-control" id="name" placeholder="Name">
+					</div>
+					<div class="form-group">
+						<label for="role">Role</label>
+						<input class="form-control" id="role" placeholder="Role">
+					</div>
+					<div class="form-group">
+						<label for="startDate">Start Date (DD/MM/YY - ex: 01/01/89)</label>
+						<input class="form-control" id="startDate" placeholder="Date">
+					</div>
+					<div class="form-group">
+						<label for="rate">Monthly Rate</label>
+						<input class="form-control" id="rate" placeholder="Rate">
+					</div>
+
+					<button type="submit" class="btn btn-primary" id="submit">Submit</button>
+				</form>
+			</li>
+		</ul>
+	</div>
+	
+	<!-- Bootstrap JS CDN -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+	<!-- JQuery -->
+	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+
+	<!-- Firebase API -->
+	<script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+
+	<!-- Moment.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.4/moment.min.js"></script>
+
+	<!-- Homebrew JS -->
+	<script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "AIzaSyDoQXHeDIgufGNo4XNFPYlBAJVOWZowztg",
+	    authDomain: "kevin-castro-code-bootcamp.firebaseapp.com",
+	    databaseURL: "https://kevin-castro-code-bootcamp.firebaseio.com",
+	    projectId: "kevin-castro-code-bootcamp",
+	    storageBucket: "kevin-castro-code-bootcamp.appspot.com",
+	    messagingSenderId: "522739162891"
+	  };
+	  firebase.initializeApp(config);
+
+	  var db = firebase.database();
+
+	  //initial vals
+	  var name = '';
+	  var role = '';
+	  var start = '';
+	  var rate = 0;
+
+	  $('#submit').on('click', function(event){
+	  	//allow pressing enter to submit the form
+	  	event.preventDefault();
+
+	  	//collect the data from the html
+	  	name = $('#name').val().trim();
+	  	role = $('#role').val().trim();
+	  	start = $('#startDate').val().trim();
+	  	rate = $('#rate').val().trim();
+
+	  	//if any items are blank, alert user, return out
+	  	if (name === '') {alert('Please enter Name.'); return;}
+	  	if (role === '') {alert('Please enter Role.'); return;}
+	  	if (start === '') {alert('Please enter Starting Date.'); return;}// need to add checks for date inputted -- nah
+  		if (rate === '') {alert('Please enter Rate'); return;}
+
+	  	//push data onto database
+	  	db.ref().push({
+	  		name : name,
+	  		role : role,
+	  		start : start,
+	  		rate : rate
+	  	});
+	  });
+
+	  db.ref().on('child_added', function(snapshot){
+	  	var employee = snapshot.val();
+
+	  	//create row we'll put stuff in
+	  	var row = $('<tr>');
+
+	  	//collect data from childSnapshot
+	  	var newName = employee.name;
+	  	var newRole = employee.role;
+	  	var newStart = employee.start;
+	  	var newRate = employee.rate;
+
+	  	//create new vals to input into the array
+	  	var monthDiff = 0;
+	  	var totalPaid = 0;
+
+	  	//create a moment object from the employee record
+	  	//I am assuming the user passed in a valid date format, checking is going to be a pain.
+	  	var startDate = moment(newStart, 'DD/MM/YY');
+	  	//create var to hold the current date
+	  	var now = moment();
+	  	//set to the monthDiff 
+		monthDiff = startDate.diff(now, 'months');
+
+		//calculate and set the total amt paid
+		totalPaid = monthDiff * newRate;
+
+	  	//create array to iterate through vals
+	  	var arr = [newName, newRole, newStart, monthDiff, newRate, totalPaid];
+
+	  	for(var i = 0; i < arr.length; i++){
+
+	  		//create entry with appropriate scope
+	  		var entry = $('<th>').attr('scope', 'col').text(arr[i]);
+
+	  		row.append(entry);
+	  	}
+
+	  	$('#tableBody').append(row);
+	  }, function(error){
+	  	console.log('Error Object Passed.');
+	  })
+
+	</script>
+	
+
+
+</body>
+</html>
