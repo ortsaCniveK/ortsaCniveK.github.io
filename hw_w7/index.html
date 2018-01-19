@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Train Schedule</title>
+
+	<!-- Link Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+</head>
+<body class="bg-dark">
+
+	<div class="container">
+		<!-- Main Page Header -->
+		<div class="jumbotron text-center">
+			<STRONG><h1>Train Schedule</h1></STRONG>
+			<h3>Because going to the station for the schedule is for chumps.</h3>
+		</div>
+
+		<!-- Create List Group in order to make it look properly as per docs -->
+		<!-- Train Table Goes here -->
+		<ul class="list-group">
+			<li class="list-group-item active"> Current Train Schedule</li>
+			<li class="list-group-item">
+
+				<div class="row">
+					<!-- Add in responsive table at a md breakpoint -->
+					<table class="table table-responsive-md">
+						<thead>
+							<tr>
+								<th scope="col">Train Name</th>
+								<th scope="col">Destination</th>
+								<th scope="col">Frequency (min)</th>
+								<th scope="col">Next Arrival</th>
+								<th scope="col">Minutes Away</th>
+							<tr>
+						</thead>
+
+						<!-- Placeholders will be added in here.-->
+						<tbody id="tableBody">
+						</tbody>
+					</table>
+				</div>
+				
+			</li>
+		</ul>
+
+		<br>
+		<br>
+		
+		<!-- Again, list group to make it look properly -->
+		<!-- Form goes here -->
+		<ul class="list-group">
+			<li class="list-group-item active">Add Train</li>
+			<li class="list-group-item">
+				<form>
+					<div class="form-group">
+						<label for="name">Train Name</label>
+						<input class="form-control" id="name" placeholder="Name">
+					</div>
+					<div class="form-group">
+						<label for="destination">Destination</label>
+						<input class="form-control" id="destination" placeholder="Destination">
+					</div>
+					<div class="form-group">
+						<label for="startTime">First Train Time (HH:mm - military time)</label>
+						<input class="form-control" id="startTime" placeholder="HH:mm">
+					</div>
+					<div class="form-group">
+						<label for="rate">Frequency (min)</label>
+						<input class="form-control" id="rate" placeholder="Rate">
+					</div>
+
+					<button type="submit" class="btn btn-primary" id="submit">Submit</button>
+				</form>
+			</li>
+		</ul>
+	</div>
+	
+	<!-- Bootstrap JS CDN -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+	<!-- JQuery -->
+	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+
+	<!-- Firebase API -->
+	<script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+
+	<!-- Moment.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.4/moment.min.js"></script>
+
+	<!-- Homebrew JS -->
+	<script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "AIzaSyDoQXHeDIgufGNo4XNFPYlBAJVOWZowztg",
+	    authDomain: "kevin-castro-code-bootcamp.firebaseapp.com",
+	    databaseURL: "https://kevin-castro-code-bootcamp.firebaseio.com",
+	    projectId: "kevin-castro-code-bootcamp",
+	    storageBucket: "kevin-castro-code-bootcamp.appspot.com",
+	    messagingSenderId: "522739162891"
+	  };
+	  firebase.initializeApp(config);
+
+	  var db = firebase.database();
+
+	  //initial vals
+	  var name = '';
+	  var destination = '';
+	  var start = '';
+	  var rate = 0;
+
+	  $('#submit').on('click', function(event){
+	  	//allow pressing enter to submit the form
+	  	event.preventDefault();
+
+	  	//collect the data from the html
+	  	name = $('#name').val().trim();
+	  	destination = $('#destination').val().trim();
+	  	start = $('#startTime').val().trim();
+	  	rate = $('#rate').val().trim();
+
+	  	//if any items are blank, alert user, return out
+	  	if (name === '') {alert('Please enter Name.'); return;}
+	  	if (destination === '') {alert('Please enter destination.'); return;}
+	  	if (start === '') {alert('Please enter Starting Date.'); return;}
+  		if (rate === '') {alert('Please enter Frequency.'); return;}
+
+	  	//push data onto database
+	  	db.ref().push({
+	  		name : name,
+	  		destination : destination,
+	  		start : start,
+	  		rate : rate
+	  	});
+	  });
+
+	  db.ref().on('child_added', function(snapshot){
+	  	var train = snapshot.val();
+
+	  	//create row we'll put stuff in
+	  	var row = $('<tr>');
+
+	  	//collect data from childSnapshot
+	  	var newName = train.name;
+	  	var newDestination = train.destination;
+	  	var newStart = train.start;
+	  	var newRate = train.rate;
+
+	  	//create new vals to input into the array
+	  	var nextArrival;
+	  	var minutesAway;
+
+	  	//create a moment object from the Train record we're collecting
+	  	//this also parses the text with the appropriate format into the moment obj
+	  	var firstArrival = moment(newStart, 'HH:mm');
+
+	  	//create var to hold the current date and time
+	  	var now = moment();
+
+	  	//add time to the first arrival until the difference between the new time 
+	  	//and the current time is positive
+	  	while ((firstArrival.diff(now, 'minutes')) <= 0){
+	  		firstArrival.add(newRate, 'm');
+	  	}
+	  	//create a temp variable to pass in the correct time string
+
+	  	var time = '';
+	  	//check to see if am or pm
+	  	if (firstArrival.get('hour') >= 12){
+	  		//temp var for hour
+	  		var pm;
+	  		//handing noon, else simply subtract 12 from the time
+	  		(firstArrival.get('hour') === 12) ? (pm = 12) : (pm = firstArrival.get('hour')-12);
+	  		time += pm;
+	  		time += ':';
+	  		var min;
+	  		//check to see if the minutes is less that ten, else just get minutes
+	  		(firstArrival.get('minute') < 10) ? (min = '0' + firstArrival.get('minute')) : (min = firstArrival.get('minute'));
+	  		time += min;
+	  		time += ' pm';
+	  	}
+	  	else {
+	  		//then the time is am
+	  		//create temp var for the hour
+	  		var am;
+	  		//handling midnight, else just get the hour
+	  		(firstArrival.get('hour') === 0) ? (am = 12) : (am = firstArrival.get('hour'));
+	  		time += am;
+	  		time += ':';
+	  		var min;
+	  		//check to see if the minutes is less that ten, else just get minutes
+	  		(firstArrival.get('minute') < 10) ? (min = '0' + firstArrival.get('minute')) : (min = firstArrival.get('minute'));
+	  		time += min;
+	  		time += ' am';
+	  	}
+	  	
+
+  	  	//set the changed firstArrival to the nextArrival 
+  		nextArrival = time;
+
+  		//add in value for the minutes left until the next arrival from the calculated next arrival
+  		//needed to add 1 so the difference would not be when the time is going to change, but when it happens
+  		//double checked to make sure that the time was right, seems like it's a quirk in moment.js
+  		minutesAway = firstArrival.diff(now, 'minutes') + 1;
+
+	  	//create array to iterate through vals
+	  	var arr = [newName, newDestination, newRate, nextArrival, minutesAway];
+
+	  	for(var i = 0; i < arr.length; i++){
+
+	  		//create entry with appropriate scope for bootstrap
+	  		var entry = $('<th>').attr('scope', 'col').text(arr[i]);
+
+	  		row.append(entry);
+	  	}
+
+	  	//append it to the list!
+	  	$('#tableBody').append(row);
+	  }, function(error){
+	  	console.log('Error Object Passed.');
+	  })
+
+	</script>
+	
+
+
+</body>
+</html>
