@@ -1,7 +1,6 @@
 require('dotenv').config();
 //custom files
 const keys = require('./keys.js');
-// const random = require('./random.txt');
 //modules
 const request = require('request');
 const fs = require('fs');
