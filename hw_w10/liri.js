@@ -17,6 +17,19 @@ const arg = process.argv.slice(3).join(' ');
 
 //create functions to be called
 
+//log function will ONLY run if there is a successful function call -- this is intended
+function log(input, output){
+	//append the file with input on a separate line from the output
+	const divider = '==========================================';
+	//first input a divider to clean up and separate call from output
+	fs.appendFile('log.txt', (divider + '\n' + input + '\n' + divider + '\n' + output + '\n'), 'utf8', (err) =>{
+		if (err) throw err;
+
+		//console log the output as normal
+		console.log(output);
+	});
+}
+
 function myTweets(user = 'niveKmA') {
 	// create a parameter object to be passed to the get function
 	const params = {screen_name : user};
@@ -43,10 +56,9 @@ function myTweets(user = 'niveKmA') {
 
 			console.log('I have looked at your tweets.  You\'re fired. \n')
 
-			//print out the information for each tweet
+			//print out the information for each tweet after logging into the log.txt
 			recent.forEach( (tweet) => {
-				console.log('Tweet #' + tweet.num + ' Created at: ' + tweet.time);
-				console.log('\t' + tweet.text + '\n');
+				log(('my-tweets ' + user + ' #' + tweet.num), ('Tweet #' + tweet.num + ' Created at: ' + tweet.time + '\n\t' + tweet.text + '\n'));
 			});
 		}
 	})
@@ -79,7 +91,8 @@ function song(song = 'The Sign') {
 		//get the song's preview link
 		const link = input.preview_url;
 
-		console.log('Beep Boop.  Here is your song:\n\tSong: ' + name + '\n\tArtist(s): ' + artists + '\n\tAlbum: ' + album + '\n\tPreview Link: ' + link);
+		//log the command and log in log.txt
+		log(('spotify-this-song ' + song), ('Beep Boop.  Here is your song:\n\tSong: ' + name + '\n\tArtist(s): ' + artists + '\n\tAlbum: ' + album + '\n\tPreview Link: ' + link));
 	});
 }
 
@@ -105,7 +118,7 @@ function movie(movie = 'Mr. Nobody') {
 
 		    //print it out
 		    // look I know it's ugly, but it looks nice on the other end :P
-		    console.log('\t' + title + '\n\n\t' + 'Year: \t\t' + year + '\n\t' + 'Actors: \t' + actors + '\n\t' + 'Rating: \t' + rating + '\n\t' + 'Language: \t' + lang + '\n\t' + 'Country: \t' + country + '\n\t' + 'IMDB Rating: \t' + imdbRating + '\n\t' + 'RT Rating: \t' + rottenRating + '\n\n\t' + 'Plot: \n\t' + plot)
+		    log(('movie-this ' + movie), ('\t' + title + '\n\n\t' + 'Year: \t\t' + year + '\n\t' + 'Actors: \t' + actors + '\n\t' + 'Rating: \t' + rating + '\n\t' + 'Language: \t' + lang + '\n\t' + 'Country: \t' + country + '\n\t' + 'IMDB Rating: \t' + imdbRating + '\n\t' + 'RT Rating: \t' + rottenRating + '\n\n\t' + 'Plot: \n\t' + plot))
 		} else {
 			console.log(error);
 		}
@@ -136,6 +149,9 @@ function justDoIt(filepath = './random.txt') {
 			//if not a string, we return back an object with a command and arg
 			return { command: temp[0], argument: temp[1]};
 		})
+
+		//log the initial do-what-it-says call
+		log(('do-what-it-says ' + filepath), ('########################################'))
 
 		//now we simply iterate through the commands array, 
 		//passing in the appropriate args
