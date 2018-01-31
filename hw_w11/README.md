@@ -1,4 +1,4 @@
-#Command line Hangman Game
+# Command line Hangman Game
 
 This program uses inquirer, so after downloading the appropriate files, please 
 >npm install
