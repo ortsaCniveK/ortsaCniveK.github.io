@@ -170,7 +170,20 @@ const addNew = () => {
 		},
 		{
 			message : 'Please enter the department to which it belongs to: ',
-			name: 'dept'
+			name : 'dept',
+			type : 'list',
+			choices : [
+			'Books & Audible', 
+			'Movies, Music, & Games', 
+			'Electronics, Computer, & Office', 
+			'Home, Garden, Pets, & Tools', 
+			'Restaurants, Food, & Grocery', 
+			'Beauty & Health', 
+			'Toys, Kids, & Baby', 
+			'Clothing, Shoes, & Jewelry', 
+			'Handmade', 
+			'Sports & Outdoors', 
+			'Automotive & Industrial']
 		},
 		{
 			message : 'Please enter the price per product: ',
