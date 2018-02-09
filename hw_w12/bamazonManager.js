@@ -1,5 +1,6 @@
 const mysql = require('mysql');
 const inquirer = require('inquirer');
+const table = require('console.table');
 
 const connection = mysql.createConnection({
 	host: 'localhost',
@@ -66,18 +67,9 @@ const displayOptions = () => {
 }
 
 //creating a generalized equation for logging the results
+//use console.table to assure it looks BEAUTIFUL :)
 const printResults = (results) => {
-	console.log('\tID\t|\tSTOCK\t|\tPRICE\t|\tDEPARTMENT\t|\tPRODUCT NAME\n');
-	results.forEach((product) => {
-		//alias for tags, to make the log more readable
-		const id = product.item_id;
-		const stock = product.stock_quantity;
-		const price = product.price;
-		const dept = product.department_name;
-		const name = product.product_name;
-
-		console.log('\t' + id + '\t|\t' + stock + '\t|\t' + price + '\t|\t' + dept + '\t|\t' + name + '\n');
-	})
+	console.table(results);
 }
 
 
@@ -162,6 +154,26 @@ const addInv = () => {
 
 }
 
+//creating this function to add real-time database compatibility
+const getDepts = () => {
+	//create array
+	let departments = [];
+
+	connection.query(
+		'select department_name from departments',
+		(err, res) => {
+			if (err) throw err;
+
+			res.forEach(department => {
+				//push onto the return array
+				//doing this just to get the strings, instead of having to read each value in the object
+				departments.push(department.department_name);
+			})
+		});
+
+	return departments;
+}
+
 const addNew = () => {
 	inquirer.prompt([
 		{
@@ -172,18 +184,7 @@ const addNew = () => {
 			message : 'Please enter the department to which it belongs to: ',
 			name : 'dept',
 			type : 'list',
-			choices : [
-			'Books & Audible', 
-			'Movies, Music, & Games', 
-			'Electronics, Computer, & Office', 
-			'Home, Garden, Pets, & Tools', 
-			'Restaurants, Food, & Grocery', 
-			'Beauty & Health', 
-			'Toys, Kids, & Baby', 
-			'Clothing, Shoes, & Jewelry', 
-			'Handmade', 
-			'Sports & Outdoors', 
-			'Automotive & Industrial']
+			choices : getDepts()
 		},
 		{
 			message : 'Please enter the price per product: ',

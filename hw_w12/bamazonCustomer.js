@@ -74,9 +74,9 @@ const pickQuantity = function(id){
 
 const placeOrder = function(id, quantity){
 	connection.query(
-		'update products set stock_quantity = stock_quantity - ? where item_id = ? and stock_quantity + 1 > ?',
+		'update products set stock_quantity = stock_quantity - ?, product_sales = product_sales + (price * ?) where item_id = ? and stock_quantity + 1 > ?',
 		//I used stock_quantity+1 to kind of "cheat" >= operator
-		[quantity, id, quantity],
+		[quantity, quantity, id, quantity],
 		(err, res) => {
 			if (err) throw err;
 
