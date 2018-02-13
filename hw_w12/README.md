@@ -57,3 +57,21 @@ Upon choosing `Add New Product` the manager will see below after entering a name
 After choosing a department to add the product to, they can specify the price per product and the stock they have:
 
 ![Successful Product Added](./images/10-Successful-Product-Added.png)
+
+## Supervisor CLI
+The CLI for supervisors allow for a higher-level view of the overall product sales.  This would be useful for sales department heads looking to get more information about profit margins and sales performance.
+
+Upon login, the supervisor view displays:
+
+![Supervisor Login](./images/11-Supervisor-Login.png)
+
+### Sales View
+The sales view provides a table of the current departments in the store, the `department_id`, and the overhead costs of the department, as well as the total profits, automatically generated on the fly from the current `products` database status.
+
+![Sales View](./images/12-View-Sales.png)
+
+
+### Adding a Department
+Supervisors are also able to add departments to the store, if they wish. Provided below is a sample of the prompts that the supervisor would go through to add a department to the store, which also adds it to the list of tracking departments in the `departments` and `products` tables.  In essence, this means that after a supervisor creates a new department, managers would immediately be able to add products to populate those departments.
+
+![Add a department view](./images/13-Add-A-Department.png)

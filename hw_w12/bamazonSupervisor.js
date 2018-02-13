@@ -42,6 +42,16 @@ const displayOptions = () => {
 
 const viewSales = () => {
 	connection.query(
+		//the below subquery only returns one value, so it's not working properly at the moment
+		//I've tried several different attempts to this, but I know what I need to do:
+		//this is how the subquery should look, ideally:
+			/*
+				select sum(product_sales)
+				from products
+				group by department_name
+			*/
+		//subtracted by overhead_costs
+		//which would then be joined to the normal departments table
 		`select *,
 			(select sum(product_sales)
 			from products
@@ -51,6 +61,7 @@ const viewSales = () => {
 		(err, res) => {
 			//use console.table for pretty tables
 			console.table(res);
+			displayOptions();
 		});
 }
 
