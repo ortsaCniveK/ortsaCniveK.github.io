@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 
 	<!-- Sticky Footer -->
-	<style media="screen">
+	<style>
 		body {
 	    display: flex;
 	    min-height: 100vh;
@@ -28,12 +28,25 @@
 </head>
 <body>
 
+	<!-- Modal to be shown after submission -->
+	<div id="modal1" class="modal">
+		<!-- Modal content is currently empty, will be populated and displayed after submit -->
+		<div class="modal-content">
+			<h1>Your Match</h1>
+		</div>
+		<div class="modal-footer">
+			<div class="row">
+				<a class="modal-close waves-effect waves-light btn-flat" href="#">Dismiss</a>
+			</div>
+		</div>
+	</div>
+
 	<!-- Navbar -->
 	<!-- Just basic logo, no added links necessary -->
 	<header>
 		<nav>
 			<div class="nav-wrapper">
-				<a href="#" class="brand-logo center">Friend Finder</a>
+				<a href="/" class="brand-logo center">Friend Finder</a>
 			</div>
 		</nav>
 	</header>
@@ -45,19 +58,16 @@
 		<div class="container">
 			<div class="col s12">
 				<div class="row">
+					<form>
 						<div class="input-field col s12">
-							<select>
-								<option value="" disabled selected>Make Your Choice</option>
-							    <option value="1">1 - Strongly Disagree</option>
-							    <option value="2">2 - Disagree</option>
-							    <option value="3">3 - No Preference</option>
-								<option value="4">4 - Agree</option>
-								<option value="5">5 - Strongly Agree</option>
-								<label>TEST</label>
-							</select>
+							<input placeholder="Jane Doe" type="text" id="name">
+							<label for="name">First Name</label>
 						</div>
-						<!-- <div class="input-field col s12">
-							<select>
+
+						<!-- For each question, we must create an individual div -->
+						<!-- Before each div will be the question, and at the end will be the submit button -->
+						<div class="input-field col s12">
+							<select class="question">
 								<option value="" disabled selected>Make Your Choice</option>
 							    <option value="1">1 - Strongly Disagree</option>
 							    <option value="2">2 - Disagree</option>
@@ -68,7 +78,7 @@
 						</div>
 
 						<div class="input-field col s12">
-							<select>
+							<select class="question">
 								<option value="" disabled selected>Make Your Choice</option>
 							    <option value="1">1 - Strongly Disagree</option>
 							    <option value="2">2 - Disagree</option>
@@ -79,7 +89,7 @@
 						</div>
 
 						<div class="input-field col s12">
-							<select>
+							<select class="question">
 								<option value="" disabled selected>Make Your Choice</option>
 							    <option value="1">1 - Strongly Disagree</option>
 							    <option value="2">2 - Disagree</option>
@@ -90,7 +100,7 @@
 						</div>
 
 						<div class="input-field col s12">
-							<select>
+							<select class="question">
 								<option value="" disabled selected>Make Your Choice</option>
 							    <option value="1">1 - Strongly Disagree</option>
 							    <option value="2">2 - Disagree</option>
@@ -101,7 +111,7 @@
 						</div>
 
 						<div class="input-field col s12">
-							<select>
+							<select class="question">
 								<option value="" disabled selected>Make Your Choice</option>
 							    <option value="1">1 - Strongly Disagree</option>
 							    <option value="2">2 - Disagree</option>
@@ -110,59 +120,20 @@
 								<option value="5">5 - Strongly Agree</option>
 							</select>
 						</div>
+					</form>
 
-						<div class="input-field col s12">
-							<select>
-								<option value="" disabled selected>Make Your Choice</option>
-							    <option value="1">1 - Strongly Disagree</option>
-							    <option value="2">2 - Disagree</option>
-							    <option value="3">3 - No Preference</option>
-								<option value="4">4 - Agree</option>
-								<option value="5">5 - Strongly Agree</option>
-							</select>
-						</div>
-
-						<div class="input-field col s12">
-							<select>
-								<option value="" disabled selected>Make Your Choice</option>
-							    <option value="1">1 - Strongly Disagree</option>
-							    <option value="2">2 - Disagree</option>
-							    <option value="3">3 - No Preference</option>
-								<option value="4">4 - Agree</option>
-								<option value="5">5 - Strongly Agree</option>
-							</select>
-						</div>
-
-						<div class="input-field col s12">
-							<select>
-								<option value="" disabled selected>Make Your Choice</option>
-							    <option value="1">1 - Strongly Disagree</option>
-							    <option value="2">2 - Disagree</option>
-							    <option value="3">3 - No Preference</option>
-								<option value="4">4 - Agree</option>
-								<option value="5">5 - Strongly Agree</option>
-							</select>
-						</div>
-
-						<div class="input-field col s12">
-							<select>
-								<option value="" disabled selected>Make Your Choice</option>
-							    <option value="1">1 - Strongly Disagree</option>
-							    <option value="2">2 - Disagree</option>
-							    <option value="3">3 - No Preference</option>
-								<option value="4">4 - Agree</option>
-								<option value="5">5 - Strongly Agree</option>
-							</select>
-						</div> -->
-
+					<!-- Submit Button -->
+					<a class="waves-effect waves-light btn-large col s12" href="#" id="submit">Submit</a>
 				</div>
 			</div>
 		</div>
 	</main>
 
 	<footer class="page-footer">
-		<div class="container">
+		<div class="footer-copyright">
+			<div class="container center-align">
 			© Kevin Castro, 2018
+			</div>
 		</div>
 	</footer>
 
@@ -171,5 +142,89 @@
 
 	<!-- Compiled and minified JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+	<script type="text/javascript">
+		// Initialize selects on page load
+		// this is a materialize req
+		$(document).ready(() => {
+			$('select').material_select();
+		});
+
+		// submit on click
+		$('#submit').on('click', () => {
+			// collect the name
+			const name = $('#name').val().trim()
+
+			// create an array with the scores
+			let scoresData = [];
+
+			//for each select in question class
+			$('.question').each(function() {
+				//get the scores
+				scoresData.push($(this).val());
+			});
+
+			// for some reason, it inputs an empty string val for the above each() call
+			// we simply just filter out the empty elements
+			// interestingly enough, we can return the val we're on, which will pick up
+			// whether it's truthy or falsy
+			scoresData = scoresData.filter(answer => answer);
+
+			scoresData = scoresData.map(parseFloat);
+
+			// for demo purposes, will not use image link, just get one randomly
+			// from randomuser.me API
+			$.ajax({
+				url: 'https://randomuser.me/api/',
+				dataType: 'json',
+				//callback
+				success: function(data) {
+					//get link to thumbnail image
+					const img = data.results[0].picture.thumbnail;
+
+					// build object:
+					// for some reason the key for the array gets renamed to
+					// "scores[]"
+					// cannot for the life of me get it to work as expected
+					const newPerson = {
+						name : name,
+						photo: img,
+						scores: scoresData
+					}
+
+					//post request
+					$.post('/api/friends', newPerson, ()=>{console.log('success')}, 'json').then((data) => {
+						// moving to separate function
+						modalContent(data);
+					})
+				}
+			});
+
+			//modal content creation
+			function modalContent(match){
+				//collect and organize data
+				const name = match.name;
+				console.log(name);
+				const photo = match.photo;
+				console.log(photo);
+				//declare content as a jQuery obj
+				// const content = $();
+
+				// console.log($('<h1>').text('Your Match: '));
+
+				//insert message
+				$('.modal-content').append($('<h1>').text('Your Match: '));
+				$('.modal-content').append($('<h3>').text(name));
+				$('.modal-content').append($('<img>').attr('href', match.photo));
+
+				// console.log(content)
+				//
+				// //insert contnet into the modal
+				// $('.modal-content').append(content);
+				//open it as per materialize docs
+				$('#modal').modal('open');
+			}
+		});
+	</script>
 </body>
 </html>

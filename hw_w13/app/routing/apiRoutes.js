@@ -21,7 +21,7 @@ router.post('/api/friends', (req, res) => {
 	//create match to be sent back to the page
 	const match = findMatch(newPerson);
 
-	//push the data being passed to the store
+	//push the data being passed to the data store
 	friends.push(newPerson);
 
 	//send back best match
@@ -30,7 +30,8 @@ router.post('/api/friends', (req, res) => {
 
 const findMatch = (inputPerson) => {
 	//collect the scores from the input
-	const newPersonScores = inputPerson.scores.map(parseFloat);
+	//really not sure why the scores array is getting renamed after being sent
+	const newPersonScores = inputPerson['scores[]'].map(parseFloat);
 
 	//collect all the scores from each person in db
 	const dbScores = friends.map( person => {
@@ -51,11 +52,11 @@ const findMatch = (inputPerson) => {
 
 		//reduce the array to its sum
 		let diffSum = diffs.reduce(function(sum, score) {
-			return sum + score
+			return sum + score;
 		});
 
-		//send to the sums array, which is organized in the same order
-		//as the friends array is\
+		// send to the sums array, which is organized in the same order
+		// as the friends array is
 		diffSums.push(diffSum);
 	});
 
