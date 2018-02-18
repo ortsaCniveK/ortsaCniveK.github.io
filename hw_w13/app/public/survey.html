@@ -3,15 +3,16 @@
 <head>
 	<title>Friend Finder</title>
 
-	<!-- mobile compat -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
 	<!-- Google Fonts -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
 	<!-- Materialize -->
 	<!-- Compiled and minified CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+
+	<!-- mobile compat -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 	<!-- Sticky Footer -->
 	<style>
@@ -30,13 +31,18 @@
 
 	<!-- Modal to be shown after submission -->
 	<div id="modal1" class="modal">
-		<!-- Modal content is currently empty, will be populated and displayed after submit -->
-		<div class="modal-content">
-			<h1>Your Match</h1>
+		<!-- Modal content id is currently empty, will be populated and displayed after submit -->
+		<div class="modal-content center-align">
+
+			<h1><strong>Your Match</strong></h1>
+			<div class="divider"></div>
+			<br>
+			<div id="content"></div>
+
 		</div>
 		<div class="modal-footer">
 			<div class="row">
-				<a class="modal-close waves-effect waves-light btn-flat" href="#">Dismiss</a>
+				<a class="modal-close waves-effect waves-light btn-flat" href="#!">Dismiss</a>
 			</div>
 		</div>
 	</div>
@@ -51,21 +57,25 @@
 		</nav>
 	</header>
 
-	<main>
-		<h1 class="center-align">Survey</h1>
-		<h4 class="center-align">Find your match!</h4>
+	<main class="blue-grey lighten-4">
+		<div class="center-align">
+			<h1>Survey</h1>
+			<h4>Find your match!</h4>
+			<p>Please answer as truthfully as you'd like.  Make sure you enjoy it!</p>
+		</div>
 
 		<div class="container">
 			<div class="col s12">
 				<div class="row">
 					<form>
 						<div class="input-field col s12">
-							<input placeholder="Jane Doe" type="text" id="name">
+							<input placeholder="Jane" type="text" id="name">
 							<label for="name">First Name</label>
 						</div>
 
 						<!-- For each question, we must create an individual div -->
 						<!-- Before each div will be the question, and at the end will be the submit button -->
+						<h5>What number do you like best?</h5>
 						<div class="input-field col s12">
 							<select class="question">
 								<option value="" disabled selected>Make Your Choice</option>
@@ -77,6 +87,7 @@
 							</select>
 						</div>
 
+						<h5>I am a person that deserves to have friends.</h5>
 						<div class="input-field col s12">
 							<select class="question">
 								<option value="" disabled selected>Make Your Choice</option>
@@ -88,6 +99,7 @@
 							</select>
 						</div>
 
+						<h5>I am constantly looking to improve myself.</h5>
 						<div class="input-field col s12">
 							<select class="question">
 								<option value="" disabled selected>Make Your Choice</option>
@@ -99,6 +111,7 @@
 							</select>
 						</div>
 
+						<h5>I enjoy learning new things, and finding new hobbies.</h5>
 						<div class="input-field col s12">
 							<select class="question">
 								<option value="" disabled selected>Make Your Choice</option>
@@ -110,6 +123,7 @@
 							</select>
 						</div>
 
+						<h5>I prefer spending time alone than with other people.</h5>
 						<div class="input-field col s12">
 							<select class="question">
 								<option value="" disabled selected>Make Your Choice</option>
@@ -123,7 +137,7 @@
 					</form>
 
 					<!-- Submit Button -->
-					<a class="waves-effect waves-light btn-large col s12" href="#" id="submit">Submit</a>
+					<a class="waves-effect waves-light btn-large col s12 modal-trigger" href="#modal1" id="submit">Submit</a>
 				</div>
 			</div>
 		</div>
@@ -148,10 +162,17 @@
 		// this is a materialize req
 		$(document).ready(() => {
 			$('select').material_select();
+			//open it as per materialize docs
+			$('.modal').modal();
 		});
+
+		let hasBeenClicked = false;
 
 		// submit on click
 		$('#submit').on('click', () => {
+			//if the button has been clicked before, do nothing.
+			if (hasBeenClicked){return;}
+
 			// collect the name
 			const name = $('#name').val().trim()
 
@@ -180,7 +201,7 @@
 				//callback
 				success: function(data) {
 					//get link to thumbnail image
-					const img = data.results[0].picture.thumbnail;
+					const img = data.results[0].picture.large;
 
 					// build object:
 					// for some reason the key for the array gets renamed to
@@ -189,11 +210,11 @@
 					const newPerson = {
 						name : name,
 						photo: img,
-						scores: scoresData
+						scores: scoresData.map(parseFloat)
 					}
 
 					//post request
-					$.post('/api/friends', newPerson, ()=>{console.log('success')}, 'json').then((data) => {
+					$.post('/api/friends', newPerson, 'json').then((data) => {
 						// moving to separate function
 						modalContent(data);
 					})
@@ -204,25 +225,14 @@
 			function modalContent(match){
 				//collect and organize data
 				const name = match.name;
-				console.log(name);
 				const photo = match.photo;
-				console.log(photo);
-				//declare content as a jQuery obj
-				// const content = $();
 
-				// console.log($('<h1>').text('Your Match: '));
+				//insert data to display
+				$('#content').append($('<img>').attr('src', match.photo).attr('height', 250));
+				$('#content').append($('<h3>').text(name));
 
-				//insert message
-				$('.modal-content').append($('<h1>').text('Your Match: '));
-				$('.modal-content').append($('<h3>').text(name));
-				$('.modal-content').append($('<img>').attr('href', match.photo));
-
-				// console.log(content)
-				//
-				// //insert contnet into the modal
-				// $('.modal-content').append(content);
-				//open it as per materialize docs
-				$('#modal').modal('open');
+				$('#modal1').modal('open');
+				hasBeenClicked = true;
 			}
 		});
 	</script>

@@ -4,7 +4,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 
 //establish the body parser for the post route's use
-router.use(bodyParser.urlencoded({extended: false}));
+router.use(bodyParser.urlencoded({extended: true}));
 router.use(bodyParser.json());
 
 
@@ -18,6 +18,7 @@ router.get('/api/friends', (req, res) => {
 
 router.post('/api/friends', (req, res) => {
 	const newPerson = req.body;
+	
 	//create match to be sent back to the page
 	const match = findMatch(newPerson);
 
@@ -30,8 +31,7 @@ router.post('/api/friends', (req, res) => {
 
 const findMatch = (inputPerson) => {
 	//collect the scores from the input
-	//really not sure why the scores array is getting renamed after being sent
-	const newPersonScores = inputPerson['scores[]'].map(parseFloat);
+	const newPersonScores = inputPerson.scores.map(parseFloat);
 
 	//collect all the scores from each person in db
 	const dbScores = friends.map( person => {
