@@ -14,7 +14,6 @@ const orm = {
                 if (err) throw err;
                 //callback call
                 callback(result);
-                return result;
             }
         );
     },
@@ -29,7 +28,6 @@ const orm = {
             (err, result) => {
                 if (err) throw err;
                 callback(result);
-                return result;
             }
         )
     },
@@ -45,7 +43,6 @@ const orm = {
             (err, result) => {
                 if (err) throw err;
                 callback(result);
-                return result;
             }
         )
 
