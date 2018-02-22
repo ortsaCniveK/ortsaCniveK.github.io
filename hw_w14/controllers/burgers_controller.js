@@ -1,5 +1,6 @@
 const express = require('express');
-const burgers = require('../models/burgers.js');
+const path = require('path');
+const burgers = require(path.join(__dirname, '../models/burgers.js'));
 
 //since we're exporting the router, only need express router
 const router = express.Router();
@@ -12,7 +13,7 @@ router.get('/', (req, res) => {
     burgers.selectBurgers( (data) => {
         //testing
         console.log(data)
-        router.render('index', {
+        res.render('index', {
             //serve them to the index page with proper data
             burger : data
         });
@@ -24,13 +25,17 @@ router.post('/burger', (req, res) => {
     //get request infomation being sent
     const name = req.body;
     //insert into the db
-    burgers.insertBurger(name, (insertId) => {
+    burgers.insertBurger(name, (data) => {
         //testing
-        console.log(insertId)
+        console.log(data)
 
-        //get back the insert id for button to be created
-        //redirect to refresh page in html's script
-        res.send(insertId);
+        //check to see if the insertId is legit
+        if (data.insertId){
+            //then send OK, refresh the page
+            return res.status(200).redirect('/');
+        }
+        //else, send back 404
+        res.status(404);
     });
 });
 
@@ -44,11 +49,12 @@ router.put('/burger/:id', (req, res) => {
         //check to see if there was a change on the db
         //vals passed back are false if no change
         if (!dbChange){
-            alert(`No id found: ${id}`);
+            //if no id found, send back 404
+            res.status(404);
         }
 
         //else, we refresh the page to display the change
-        res.redirect('/');
+        res.status(200).redirect('/');
     })
 });
 
