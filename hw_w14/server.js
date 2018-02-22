@@ -22,7 +22,7 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
 //connect routes
-const routes = require(path.join(__dirname, './controllers/burger_controller.js'));
+const routes = require(path.join(__dirname, './controllers/burgers_controller.js'));
 app.use(routes);
 
 //log the listener
