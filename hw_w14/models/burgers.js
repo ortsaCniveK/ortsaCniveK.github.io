@@ -10,8 +10,8 @@ const burgers = {
     },
     insertBurger : (name) => {
         orm.insertOne('burgers', 'burger_name', name, (result) => {
-            //return back the insertId for button to be created
-            return result.insertId;
+            //return back the result
+            return result;
         })
     },
     updateBurger : (id) => {
