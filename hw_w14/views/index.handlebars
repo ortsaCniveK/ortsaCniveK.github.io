@@ -6,17 +6,17 @@
         <li class="collection-header">Ready-To-Eat!</li>
 
         <!-- for each burger passed to handlebars -->
-        {{{#each burger}}}
+        {{#each burger}}
             <!-- use the handlebars helper for inverse if -->
-            {{{#unless devoured}}}
+            {{#unless devoured}}
                 <!-- add in the element with burger name  -->
                 <li class="collection-item" id="{{id}}">
                     {{burger_name}}
                     <!-- materialize icon and button that will be used to call the devour function -->
                     <a href="#" id="{{id}}"><i class="material-icons">local_dining</i></a>
                 </li>
-            {{{/unless}}}
-        {{{/each}}}
+            {{/unless}}
+        {{/each}}
 
     </ul>
 </div>
@@ -29,12 +29,12 @@
         <li class="collection-header">Already Eaten <i class="material-icons">sentiment_very_dissatisfied</i></li>
 
         <!-- Add in from the db for each-->
-        {{{#each burger}}}
+        {{#each burger}}
             <!-- use normal handlebars if -->
-            {{{#if devoured}}}
+            {{#if devoured}}
                 <li class="collection-item">{{burger_name}}</li>
-            {{{/if}}}
-        {{{/each}}}
+            {{/if}}
+        {{/each}}
 
     </ul>
 </div>
