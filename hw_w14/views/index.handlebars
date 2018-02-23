@@ -1,9 +1,16 @@
+<!-- logo image and title -->
+<div class="col s4 offset-s4">
+    <h1 class="center-align">Schmob's Schmurgers</h1>
+    <h6 class="right-align">definitely not a trademark...</h6>
+    <img src="../public/assets/img/hamburger.png" alt="EAT YA FILL">
+</div>
+
 <!-- Add in the current burgers that we have from the db -->
 <div class="col s6 not-devoured">
 
     <ul class="collection with-header">
         <!-- Title -->
-        <li class="collection-header">Ready-To-Eat!</li>
+        <li class="collection-header center-align"><strong>Ready-To-Eat!</strong></li>
 
         <!-- for each burger passed to handlebars -->
         {{#each burger}}
@@ -26,7 +33,7 @@
     <!-- Materialize has a collection with a header for us -->
     <ul class="collection with-header">
         <!-- Title -->
-        <li class="collection-header">Already Eaten <i class="material-icons">sentiment_very_dissatisfied</i></li>
+        <li class="collection-header center-align"><strong>Already Eaten</strong> <i class="material-icons">sentiment_very_dissatisfied</i></li>
 
         <!-- Add in from the db for each-->
         {{#each burger}}
@@ -44,5 +51,6 @@
 <form class="col s12">
     <div class="row">
         <input placeholder="New Burger Name" type="text" id="new-burger">
+        <a href="#" id="submit" class="waves-effect wave-light btn-large">Submit</a>
     </div>
 </form>
