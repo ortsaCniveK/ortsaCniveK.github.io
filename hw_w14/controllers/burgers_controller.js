@@ -29,7 +29,7 @@ router.post('/burger', (req, res) => {
         //check to see if the insertId is legit
         if (data.insertId){
             //then send OK, refresh the page
-            return res.status(200).redirect('/');
+            return res.status(200);
         }
         //else, send back 404
         res.status(404);
@@ -51,7 +51,7 @@ router.put('/burger/:id', (req, res) => {
         }
 
         //else, we refresh the page to display the change
-        res.status(200).redirect('/');
+        res.status(200);
     })
 });
 
