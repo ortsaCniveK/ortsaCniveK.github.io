@@ -23,12 +23,9 @@ router.get('/', (req, res) => {
 //sending new burger to db
 router.post('/burger', (req, res) => {
     //get request infomation being sent
-    const name = req.body;
+    const name = req.body.name;
     //insert into the db
     burgers.insertBurger(name, (data) => {
-        //testing
-        console.log(data)
-
         //check to see if the insertId is legit
         if (data.insertId){
             //then send OK, refresh the page
@@ -45,7 +42,7 @@ router.put('/burger/:id', (req, res) => {
     //get the id for the burger to change on db
     const id = req.params.id
     //call update function for the db
-    updateBurger(id, (dbChange) => {
+    burgers.updateBurger(id, (dbChange) => {
         //check to see if there was a change on the db
         //vals passed back are false if no change
         if (!dbChange){
