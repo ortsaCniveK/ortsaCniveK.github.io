@@ -14,6 +14,7 @@ const port = 3000 || process.env.PORT;
 
 //bodyParser
 //omitting the false urlencoded, since it's caused issues
+app.use(bodyParser.urlencoded({ extended : true}));
 app.use(bodyParser.json());
 
 //handlebars
