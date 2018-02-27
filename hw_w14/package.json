@@ -1,6 +1,9 @@
 {
   "name": "hw_w14",
   "version": "1.0.0",
+  "engines" : {
+        "node" : "9.4.x"
+  },
   "description": "Eat Da Burger",
   "main": "server.js",
   "scripts": {
