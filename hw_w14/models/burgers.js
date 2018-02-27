@@ -4,7 +4,6 @@ const burgers = {
     selectBurgers : (callback) => {
         //get the callback to return the result array
         orm.selectAll('burgers', (result) => {
-            console.log(result)
             //do something with the result
             callback(result);
         });
