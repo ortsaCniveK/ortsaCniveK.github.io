@@ -47,7 +47,7 @@ router.put('/burger/:id', (req, res) => {
         //vals passed back are false if no change
         if (!dbChange){
             //if no id found, send back 404
-            res.status(404);
+            return res.status(404);
         }
 
         //else, we refresh the page to display the change
