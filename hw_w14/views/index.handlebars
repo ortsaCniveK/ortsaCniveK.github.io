@@ -5,7 +5,7 @@
 </div>
 
 <!-- Add in the current burgers that we have from the db -->
-<div class="col s6 not-devoured">
+<div class="col s6">
 
     <ul class="collection with-header">
         <!-- Title -->
@@ -16,10 +16,10 @@
             <!-- use the handlebars helper for inverse if -->
             {{#unless devoured}}
                 <!-- add in the element with burger name  -->
-                <li class="collection-item" id="{{id}}">
+                <li class="collection-item">
                     {{burger_name}}
                     <!-- materialize icon and button that will be used to call the devour function -->
-                    <a href="#" id="{{id}}"><i class="material-icons">local_dining</i></a>
+                    <a href="#" data-id="{{id}}" class="not-devoured"><i class="material-icons">local_dining</i></a>
                 </li>
             {{/unless}}
         {{/each}}
