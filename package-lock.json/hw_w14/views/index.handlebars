@@ -1,0 +1,53 @@
+<!-- logo image and title -->
+<div class="col s4 offset-s4">
+    <h3 class="center-align">Schmob's Schmurgers</h3>
+    <img src="/assets/img/hamburger.png" alt="EAT YA FILL" class="responsive-img">
+</div>
+
+<!-- Add in the current burgers that we have from the db -->
+<div class="col s6">
+
+    <ul class="collection with-header">
+        <!-- Title -->
+        <li class="collection-header center-align"><strong>Ready-To-Eat!</strong></li>
+
+        <!-- for each burger passed to handlebars -->
+        {{#each burger}}
+            <!-- use the handlebars helper for inverse if -->
+            {{#unless devoured}}
+                <!-- add in the element with burger name  -->
+                <li class="collection-item">
+                    {{burger_name}}
+                    <!-- materialize icon and button that will be used to call the devour function -->
+                    <a href="#" data-id="{{id}}" class="not-devoured"><i class="material-icons">local_dining</i></a>
+                </li>
+            {{/unless}}
+        {{/each}}
+
+    </ul>
+</div>
+
+<!-- div for devoured burgers -->
+<div class="col s6 devoured">
+    <!-- Materialize has a collection with a header for us -->
+    <ul class="collection with-header">
+        <!-- Title -->
+        <li class="collection-header center-align"><strong>Already Eaten</strong> <i class="material-icons">sentiment_very_dissatisfied</i></li>
+
+        <!-- Add in from the db for each-->
+        {{#each burger}}
+            <!-- use normal handlebars if -->
+            {{#if devoured}}
+                <li class="collection-item">{{burger_name}}</li>
+            {{/if}}
+        {{/each}}
+
+    </ul>
+</div>
+
+
+<!-- form for adding a new burger to db -->
+<form class="col s12">
+    <input placeholder="New Burger Name" type="text" id="new-burger">
+    <a href="#" id="submit" class="waves-effect wave-light btn-large col s12">Submit</a>
+</form>
