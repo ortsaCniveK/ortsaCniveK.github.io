@@ -9,8 +9,8 @@ const app = express();
 // public static content
 app.use(express.static('public'));
 
-//set up port for local or heroku
-const port = 3000 || process.env.PORT;
+//set up port for heroku or local
+const port = process.env.PORT || 3000;
 
 //bodyParser
 //omitting the false urlencoded, since it's caused issues
@@ -27,6 +27,4 @@ const routes = require(path.join(__dirname, './controllers/burgers_controller.js
 app.use(routes);
 
 //log the listener
-app.listen(port, () => {
-    console.log(`listening on port ${port}`);
-});
+app.listen(port);
