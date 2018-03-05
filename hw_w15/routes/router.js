@@ -4,11 +4,15 @@ module.exports = function (app) {
     //home
     app.get('/', (req, res) => {
         //get all entries from the db
-        db.burger.findAll().then(burgers => {
-            //render with handlebars
-            res.render('index', {
-                //using singular for clarity in handlebars
-                burger : burgers
+        //need to get the customer list before the burgers since the customers own the burgers
+        db.customer.findAll().then(customers => {
+            db.burger.findAll().then(burgers => {
+                //render with handlebars
+                res.render('index', {
+                    //using singular for clarity in handlebars
+                    burger : burgers,
+                    customer : customers
+                });
             });
         });
     });
