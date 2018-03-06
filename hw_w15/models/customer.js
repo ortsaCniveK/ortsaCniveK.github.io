@@ -4,8 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     name: {
         type : DataTypes.STRING,
         validate : {
-            //doesn't allow empty string or null val
-            notNull : true,
+            //doesn't allow empty string
             notEmpty : true
         }
     }
