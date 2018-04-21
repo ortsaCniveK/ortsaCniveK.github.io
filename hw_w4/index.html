@@ -4,12 +4,6 @@
 	<title> Star Wars Game	</title>
 	<!-- Adding Bootstrap CDN -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-
-	<!-- Add link to jQuery CDN -->
-
 
 	<!-- Adding custom styling -->
 	<link rel="stylesheet" type="text/css" href="./assets/css/style.css">
@@ -24,25 +18,35 @@
 
 	<!-- Jumbotron with basic game information, should try to change so the page loads, this coming up and being dismissed afterwards-->
 	<!-- Give z-index of +1 and the button that dismisses it. -->
-	<div class="jumbotron">
-
-		<h1>Star Wars Game</h1>
-		<p>Hello and welcome to my game!  This is a basic battle simulator for my favorite star wars characters.  To start playing, simply press the button below.  You will first choose a character to play, then you will choose your opponent.  May the Force be with you!</p>
-
-		<!-- button bootstrap implementation -->
-		<div id="start" class="btn btn-primary btn-lg" href="#" role="button">Start Game!</div>
+	<div class="modal fade" id="greeting" role="dialog" aria-labelledby="greeting" aria-hidden="true">
+		<div class="modal-dialog" role="document"></div>
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title">Star Wars Game</h1>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p>Hello and welcome to my game!  This is a basic battle simulator for my favorite star wars characters.  To start playing, simply press the button below.  You will first choose a character to play, then you will choose your opponent.  May the Force be with you!</p>
+			</div>
+			<div class="modal-footer">
+				<!-- button bootstrap implementation -->
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Start Game!</button>
+			</div>
+		</div>
 	</div>
 
 	<!-- adding container for compatibility with bootstrap -->
 	<div class="container">		
 		<!-- Character Choice section goes here - chosen char will be pushed to arena block-->
 		<!-- note, image heights are hard set for consistency, though certainly not prettiness ;P -->
-		<div class="row">
+		<div class="row select">
 			<h2 class="col-sm-12">Character Selection</h2>
 			<hr>
 			<h5 class="col-sm-12 text-muted">Determine who will be your champion in the coming battle.</h5>
 			<!-- General Grievous -->
-			<div id="grievous" class="col-sm-4">
+			<div id="grievous" class="col-sm-4 characterCard">
 				<div class="card">
 					<img title="Battle-hardened General.  True to his title, he has brought home many victories using his cunning and his augmented physical form.  His capabilities are sure to win any battle he chooses." src="./assets/images/Grievous.jpg" height="300">
 					<div class="card-body">
@@ -51,13 +55,13 @@
 							<li class="hp">Health Points: </li>
 							<li class="ap">Attack Power: </li>
 						</ul>
-						<a href="#" class="btn btn-primary character">Choose</a>
+						<a href="#" class="btn btn-primary charBtn" data-char="grievous">Choose</a>
 					</div>
 				</div>
 			</div>
 
 			<!-- Obi Wan Kenobi -->
-			<div id="obi" class="col-sm-4">
+			<div id="obi" class="col-sm-4 characterCard">
 				<div class="card">
 					<img title="One of the most prominent members of the Jedi Force.  He fights for good, using his trusty lightsaber and guile to trick his foes, and assuring swift victory.  He is a bastion of all that is good in a Jedi." src="./assets/images/Obi-Wan.jpg" height="300">
 					<div class="card-body">
@@ -66,14 +70,14 @@
 							<li class="hp">Health Points: </li>
 							<li class="ap">Attack Power: </li>
 						</ul>
-						<a href="#" class="btn btn-primary character">Choose</a>				
+						<a href="#" class="btn btn-primary charBtn" data-char="obi">Choose</a>				
 					</div>
 
 				</div>
 			</div>
 			
 			<!-- Anakin Skywalker -->
-			<div id="anakin" class="col-sm-4">
+			<div id="anakin" class="col-sm-4 characterCard">
 				<div class="card">
 					<img title="A previously up-and-coming Jedi in the Jedi Order, Anakin denounced the jedi bureacracy and methodology, choosing the Dark Side over that of the Jedi.  He fights for what he believes is right." src="./assets/images/Anakin.jpg" height="300">
 					<div class="card-body">
@@ -82,7 +86,7 @@
 							<li class="hp">Health Points: </li>
 							<li class="ap">Attack Power: </li>
 						</ul>
-						<a href="#" class="btn btn-primary character">Choose</a>
+						<a href="#" class="btn btn-primary charBtn" data-char="anakin">Choose</a>
 					</div>
 				</div>
 			</div>
@@ -93,10 +97,15 @@
 		<br>
 		
 		<!-- Opponent Selector Module goes here -->
-		<div class="row">
+		<div class="row barracks">
 			<h2 class="col-sm-12">The Barracks</h2>
 			<hr>
 			<h5 class="col-sm-12 text-muted">Choose your opponent</h5>
+		</div>
+
+		<!-- Display fight message after they complete selection -->
+		<div class="text-center fightMsg">
+			<h1>Time for a STAR WARS battle!</h1>
 		</div>
 
 		<hr>
@@ -108,15 +117,26 @@
 			<hr>
 			<h5 class="col-sm-12 text-muted">Let the Battle Begin!</h5>
 			
-			<!-- Player versus opponent UI Goes here -->
-			<div id="player" class="col-sm-4 player"></div>
-			<div class="col-sm-4"><img src="./assets/images/versus.png" class="img-fluid" alt="versus icon"></div>
-			<div id="opponent" class="col-sm-4"></div>
+			<div class="col-sm-12">
+				<div class="row">
+					<!-- Player versus opponent UI Goes here -->
+					<div id="player" class="col-sm-4 player"></div>
+					<div class="col-sm-4"><img src="./assets/images/versus.png" class="img-fluid" alt="versus icon"></div>
+					<div id="opponent" class="col-sm-4"></div>
+				</div>
+			</div>
 			
 			<!-- Fight Button Goes here -->
 			<button id= "fight" type="button" class="btn btn-primary btn-lg btn-block">FIGHT</button>
 		</div>
 	</div>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	 crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+	 crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+	 crossorigin="anonymous"></script>
 	<!-- Adding custom Javascript -->
 	<script type="text/javascript" src="./assets/javascript/game.js"></script>
 </body>
