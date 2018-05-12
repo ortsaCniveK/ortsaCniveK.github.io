@@ -1,0 +1,83 @@
+<!-- logo image and title -->
+<div class="col s4 offset-s4">
+    <h3 class="center-align">Schmob's Schmurgers</h3>
+    <img src="/assets/img/hamburger.png" alt="EAT YA FILL" class="responsive-img">
+</div>
+
+
+<!-- Add in the current burgers that we have from the db -->
+<div class="col s6">
+
+    <ul class="collection with-header">
+        <!-- Title -->
+        <li class="collection-header center-align"><strong>Ready-To-Eat!</strong></li>
+
+        <!-- for each burger passed to handlebars -->
+        {{#each burger}}
+            <!-- use the handlebars helper for inverse if -->
+            {{#unless devoured}}
+                <!-- add in the element with burger name  -->
+                <li class="collection-item">
+                    {{burger_name}}
+                    <!-- materialize icon and button that will be used to call the devour function -->
+                    <a href="#" data-id="{{id}}" class="not-devoured"><i class="material-icons">local_dining</i></a>
+                </li>
+            {{/unless}}
+        {{/each}}
+
+    </ul>
+</div>
+
+<!-- div for devoured burgers -->
+<div class="col s6 devoured">
+    <!-- Materialize has a collection with a header for us -->
+    <ul class="collection with-header">
+        <!-- Title -->
+        <li class="collection-header center-align"><strong>Already Eaten</strong> <i class="material-icons">sentiment_very_dissatisfied</i></li>
+
+        <!-- Add in from the db for each-->
+        {{#each burger}}
+            <!-- use normal handlebars if -->
+            {{#if devoured}}
+                <li class="collection-item">{{burger_name}}</li>
+            {{/if}}
+        {{/each}}
+
+    </ul>
+</div>
+
+<!-- trigger for modal to add a customer  -->
+<a href="#customerChoice" class="waves-effect wave-light btn-large modal-trigger col s4 offset-s4">Choose Customer</a>
+
+<!-- form for adding a new burger to db -->
+<form class="col s12">
+    <input placeholder="New Burger Name" type="text" id="new-burger">
+    <a href="#" id="submit" class="waves-effect wave-light btn-large col s12">Submit Burger</a>
+</form>
+
+
+<!-- modal for adding new customer -->
+<!-- triggered by button above -->
+<div id="customerChoice" class="modal">
+    <div class="modal-content">
+        <!-- collection to choose what customer you are, which changes what customer you are eating as -->
+        <ul class="collection">
+            <!-- for each customer -->
+            {{#each customer}}
+                <!-- create collection item that has a link that closes the modal when clicked on-->
+                <li class="collection-item"><a href="#" data-id="{{id}}" class="modal-action modal-close">{{name}}</a></li>
+            {{/each}}
+        </ul>
+
+        <!-- text input to add new customer -->
+        <form class="col s12">
+            <div class="input-field col s12">
+                <label for="new-customer">Add a Customer (will refresh page)</label>
+                <input type="text" id="new-customer" placeholder="John Doe">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" id="customer">Submit New Customer</a>
+    </div>
+</div>
