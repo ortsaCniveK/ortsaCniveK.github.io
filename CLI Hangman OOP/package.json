@@ -17,6 +17,6 @@
   "license": "ISC",
   "dependencies": {
     "inquirer": "^5.0.1",
-    "npm": "^6.0.1"
+    "npm": "^6.13.4"
   }
 }
